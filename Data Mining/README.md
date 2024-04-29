@@ -24,6 +24,7 @@ Analisis Cluster Hierarki yang digunakan berdasarkan Tugas Based Project pada Ma
 
 #### 2. Melakukan Pemeriksaan Asumsi ####
 - Asumsi Kecukupan Sampel (KMO)
+
 kmo <- KMO(Data);kmo
 Kaiser-Meyer-Olkin factor adequacy
 Call: KMO(r = Data)
@@ -34,6 +35,7 @@ MSA for each item =
 
 Berdasarkan output dapat diketahui bahwa semua sampel memiliki nilai MSA yang lebih dari 0,5. Hal ini dapat diartikan bahwa semua yang digunakan telah representatif, sehingga **Asumsi Kecukupan Sampel Terpenuhi**.
 - Asumsi Nonmultikolinieritas
+
 > korelasi <- cor(Data, method = 'pearson');korelasi
            X1         X2         X3         X4
 X1  1.0000000 -0.3883683 -0.6153603 -0.6697805
