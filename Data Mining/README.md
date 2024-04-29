@@ -7,7 +7,7 @@ Analisis Cluster Hierarki yang digunakan berdasarkan Tugas Based Project pada Ma
 ### Langkah-Langkah Analisis ###
 #### 1. Melakukan Analisis Statistik Deskriptif ####
 
-summary(Data)
+```> summary(Data)
        X1               X2              X3       
  Min.   : 4.450   Min.   :2.725   Min.   : 7146  
  1st Qu.: 6.258   1st Qu.:3.979   1st Qu.: 9699  
@@ -21,7 +21,7 @@ summary(Data)
  Median :72.19  
  Mean   :71.97  
  3rd Qu.:73.22  
- Max.   :81.65
+ Max.   :81.65 ```
 
 #### 2. Melakukan Pemeriksaan Asumsi ####
 - Asumsi Kecukupan Sampel (KMO)
