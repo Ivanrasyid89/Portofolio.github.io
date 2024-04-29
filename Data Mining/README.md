@@ -21,29 +21,29 @@ Analisis Cluster Hierarki yang digunakan berdasarkan Tugas Based Project pada Ma
  Median :72.19  
  Mean   :71.97  
  3rd Qu.:73.22  
- Max.   :81.65 ```
-
+ Max.   :81.65
+```
 #### 2. Melakukan Pemeriksaan Asumsi ####
 - Asumsi Kecukupan Sampel (KMO)
-
-kmo <- KMO(Data);kmo
+```
+> kmo <- KMO(Data);kmo
 Kaiser-Meyer-Olkin factor adequacy
 Call: KMO(r = Data)
 Overall MSA =  0.74
 MSA for each item = 
   X1   X2   X3   X4 
 0.90 0.92 0.69 0.66
-
+```
 Berdasarkan output dapat diketahui bahwa semua sampel memiliki nilai MSA yang lebih dari 0,5. Hal ini dapat diartikan bahwa semua yang digunakan telah representatif, sehingga **Asumsi Kecukupan Sampel Terpenuhi**.
 - Asumsi Nonmultikolinieritas
-
-korelasi <- cor(Data, method = 'pearson');korelasi
+```
+> korelasi <- cor(Data, method = 'pearson');korelasi
            X1         X2         X3         X4
 X1  1.0000000 -0.3883683 -0.6153603 -0.6697805
 X2 -0.3883683  1.0000000  0.4337638  0.4882251
 X3 -0.6153603  0.4337638  1.0000000  0.8778390
 X4 -0.6697805  0.4882251  0.8778390  1.0000000
-
+```
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/f618b70f-39aa-43e3-a9f9-1a75b8607f33)
 
 Berdasarkan output dapat diketahui bahwa terjadi pelanggaran asumsi nonmultikolinieritas. Hal ini disebabkan karena adanya korelasi yang kuat antara "Indeks Pembangunan Manusia" dan "Pengeluaran Perkapita", sehingga **Asumsi Nonmultikolinieritas Tidak Terpenuhi**.
