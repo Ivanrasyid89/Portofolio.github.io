@@ -152,8 +152,8 @@ Penjelasan:
 - Baris kedua menunjukkan nama tabel utama (Tabel Sales) yang digunakan
 - Baris ketiga menunjukkan penggabungan antara kedua tabel (Tabel Product dan Tabel Sales) yang digunakan
 - Baris keempat menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Product ID)
-- Baris kelima menunjukkan mengurutkan hasil berdasarkan Quantity dari yang paling tinggi
-- Baris keenam menunjukkan batas baris yang memiliki Quantiti tertinggi
+- Baris kelima menunjukkan urutan hasil berdasarkan Quantity dari yang paling tinggi
+- Baris keenam menunjukkan batas sebanyak 8 baris yang memiliki Quantity tertinggi
 - Baris kesembilan menunjukkan akhir dari sebuah pernyataan SQL
 
 ## Menampilkan Nama Produk dan Kategori berdasarkan Total Produk yang memiliki Diskon lebih dari 10%
