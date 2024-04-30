@@ -116,3 +116,22 @@ Penjelasan:
 - Baris kedelapan menunjukkan klausa untuk mengelompokkan baris berdasarkan nilai tertentu dari suatu kolom (Kolom Category, Country/Region, dan City)
 - Baris kesembilan menunjukkan akhir dari sebuah pernyataan SQL
 
+## Menampilkan Total Penjualan (Sales) pada Tanggal Pemesanan (Order Date) '08/11/2020' ##
+```
+SELECT ship.`Order Date`, ship.`Order ID`, ship.`Customer ID`, orders.`Product ID`,
+SUM(sales.`Sales`) AS Total_Sales
+FROM ship
+JOIN orders ON ship.`Order ID` = orders.`Order ID` AND ship.`Customer ID` = orders.`Customer ID`
+JOIN sales ON orders.`Product ID` = sales.`Product ID`
+WHERE ship.`Order Date` = '08/11/2020';
+```
+<img width="373" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/798d4a3f-288b-413b-913c-14628843779b">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan fungsi agregate total dari Total Penjualan (Sales) yang ditampilkan dalam kolom Rata-Total_Sales
+- Baris ketiga menunjukkan nama tabel utama (Tabel Ship) yang digunakan
+- Baris keempat menunjukkan penggabungan tabel Ship dengan tabel Orders berdasarkan kriteria Order ID dan Customer ID
+- Baris kelima menunjukkan penggabungan tabel Product dengan tabel Sales berdasarkan kriteria Product ID
+- Baris keenam menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu ('08/11/2020')
+
