@@ -4,7 +4,7 @@ Analisis Cluster Hierarki yang digunakan berdasarkan Tugas Based Project pada Ma
 3. X3 : Indeks Pembangunan Manusia
 4. X4 : Pengeluaran Perkapita
 
-### Langkah-Langkah Analisis ###
+# Langkah-Langkah Analisis #
 #### 1. Melakukan Analisis Statistik Deskriptif ####
 
 ```> summary(Data)
