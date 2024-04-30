@@ -18,7 +18,7 @@ WHERE ship.`Order Date` = '12/06/2020';
 
 Penjelasan:
 - Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
-- Baris kedua menunjukkan nama tabel yang digunakan
+- Baris kedua menunjukkan nama tabel utama yang digunakan
 - Baris ketiga menunjukkan penggabungan antara kedua tabel yang digunakan
 - Baris keempat menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama
 - Baris kelima menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu
