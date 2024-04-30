@@ -18,7 +18,17 @@ WHERE ship.`Order Date` = '12/06/2020';
 
 Penjelasan:
 - Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
-- Baris kedua menunjukkan nama tabel utama yang digunakan
-- Baris ketiga menunjukkan penggabungan antara kedua tabel yang digunakan
-- Baris keempat menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama
-- Baris kelima menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu
+- Baris kedua menunjukkan nama tabel utama (Tabel Ship) yang digunakan
+- Baris ketiga menunjukkan penggabungan antara kedua tabel (Tabel Customer dan Tabel Ship) yang digunakan
+- Baris keempat menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama (Customer ID)
+- Baris kelima menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu ('12/06/2020')
+
+## Menampilkan Product ID, Product Name yang memiliki diskon '0.2' menggunakan INNER JOIN ##
+```
+SELECT product.`Product ID`, product.`Product Name`
+FROM product
+INNER JOIN sales
+ON product.`Product ID` = sales.`Product ID`
+WHERE sales.`Discount` = '0.2';
+```
+
