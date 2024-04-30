@@ -20,5 +20,5 @@ Penjelasan:
 - Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
 - Baris kedua menunjukkan nama tabel yang digunakan
 - Baris ketiga menunjukkan penggabungan antara kedua tabel yang digunakan
-- Baris kelima menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama
-- Baris keenam menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu
+- Baris keempat menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama
+- Baris kelima menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu
