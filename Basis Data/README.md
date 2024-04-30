@@ -53,6 +53,66 @@ AND orders.`Customer ID` = ship.`Customer ID`;
 Penjelasan:
 - Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
 - Baris kedua menunjukkan nama tabel utama (Tabel Orders) yang digunakan
-- Baris ketiga menunjukkan penggabungan antara tabel utama (Tabel Orders) di sebelah kiri dengan tabel kedua (Tabel Ship) di sebelah kanan
+- Baris ketiga menunjukkan penggabungan antara tabel pertama (Tabel Orders) di sebelah kiri dengan tabel kedua (Tabel Ship) di sebelah kanan
 - Baris keempat menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Order ID)
 - Baris kelima menunjukkan kondisi kedua antara dua tabel yang memiliki kolom yang sama (Customer ID)
+
+## Menampilkan Product ID, Category, Sub-Category, Quantity, Discount dengan RIGHT JOIN ##
+```
+SELECT product.`Product ID`, product.`Category`, product.`Sub-Category`, sales.`Quantity`, sales.`Discount`
+FROM product
+RIGHT JOIN sales
+ON product.`Product ID` = sales.`Product ID`;
+```
+<img width="364" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/1354d7af-8b4f-4418-96ea-3ee84a3baba5">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan nama tabel utama (Tabel Product) yang digunakan
+- Baris ketiga menunjukkan penggabungan antara tabel kedua (Tabel Sales) di sebelah kanan dengan tabel pertama (Tabel Product) di sebelah kiri
+- Baris keempat menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Product ID)
+
+## Menampilkan Total Penjualan (Sales) berdasarkan Kategori (Category) Produk ##
+```
+SELECT product.`Product ID`, product.`Category`, 
+SUM(sales.`Sales`) AS Total_Sales
+FROM product
+INNER JOIN sales
+ON product.`Product ID` = sales.`Product ID`
+GROUP BY product.`Category`;
+```
+<img width="361" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/e7fe719d-8263-47a3-9c7c-1f5fee851921">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan fungsi agregate penjumlahan dari Total Penjualan (Sales) yang ditampilkan dalam kolom Total_Sales
+- Baris ketiga menunjukkan nama tabel utama (Tabel Product) yang digunakan
+- Baris keempat menunjukkan penggabungan antara kedua tabel (Tabel Product dan Tabel Sales) yang digunakan
+- Baris kelima menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Product ID)
+- Baris keenam menunjukkan klausa untuk mengelompokkan baris berdasarkan nilai tertentu dari suatu kolom (Kolom Category)
+
+## Menampilkan Rata-rata Penjualan (Sales) berdasarkan Kategori Produk di setiap Negara (Country/Region) dan Kota (City) ##
+```
+SELECT product.`Product ID`, product.`Category`, customer.`Country/Region`, customer.`City`, orders.`Customer ID`,
+AVG(sales.`Sales`) AS Rata_Rata_Penjualan
+FROM product
+JOIN orders ON product.`Product ID` = orders.`Product ID`
+JOIN customer ON orders.`Customer ID` = customer.`Customer ID`
+INNER JOIN sales
+ON product.`Product ID` = sales.`Product ID`
+GROUP BY product.`Category`, customer.`Country/Region`, customer.`City`
+;
+```
+<img width="452" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/ec86ee6c-8c1c-45b3-bac3-2ffdb77fc291">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan fungsi agregate rata-rata dari Rata-rata Penjualan (Sales) yang ditampilkan dalam kolom Rata-Rata_Penjualan
+- Baris ketiga menunjukkan nama tabel utama (Tabel Product) yang digunakan
+- Baris keempat menunjukkan penggabungan tabel Product dengan tabel Orders berdasarkan kriteria Product ID
+- Baris kelima menunjukkan penggabungan tabel Orders dengan tabel Customer berdasarkan kriteria Customer ID
+- Baris keenam menunjukkan penggabungan antara kedua tabel (Tabel Product dan Tabel Sales) yang digunakan
+- Baris ketujuh menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Product ID)
+- Baris kedelapan menunjukkan klausa untuk mengelompokkan baris berdasarkan nilai tertentu dari suatu kolom (Kolom Category, Country/Region, dan City)
+- Baris kesembilan menunjukkan akhir dari sebuah pernyataan SQL
+
