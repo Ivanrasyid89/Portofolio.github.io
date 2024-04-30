@@ -5,8 +5,7 @@ Analisis Cluster Hierarki yang digunakan berdasarkan Tugas Based Project pada Ma
 4. X4 : Pengeluaran Perkapita
 
 # Langkah-Langkah Analisis #
-#### 1. Melakukan Analisis Statistik Deskriptif ####
-
+## 1. Melakukan Analisis Statistik Deskriptif ##
 ```> summary(Data)
        X1               X2              X3       
  Min.   : 4.450   Min.   :2.725   Min.   : 7146  
@@ -23,7 +22,7 @@ Analisis Cluster Hierarki yang digunakan berdasarkan Tugas Based Project pada Ma
  3rd Qu.:73.22  
  Max.   :81.65
 ```
-#### 2. Melakukan Pemeriksaan Asumsi ####
+## 2. Melakukan Pemeriksaan Asumsi ##
 - Asumsi Kecukupan Sampel (KMO)
 ```
 > kmo <- KMO(Data);kmo
@@ -48,7 +47,7 @@ X4 -0.6697805  0.4882251  0.8778390  1.0000000
 
 Berdasarkan output dapat diketahui bahwa terjadi pelanggaran asumsi nonmultikolinieritas. Hal ini disebabkan karena adanya korelasi yang kuat antara "Indeks Pembangunan Manusia" dan "Pengeluaran Perkapita", sehingga **Asumsi Nonmultikolinieritas Tidak Terpenuhi**.
 
-#### 3. Melakukan Data Preprocessing ####
+## 3. Melakukan Data Preprocessing ##
 - Standarisasi Data
 ```
 > datastand <- scale(Data);datastand
@@ -162,7 +161,7 @@ Cumulative Proportion  0.6933 0.8627 0.9708 1.0000
 
 Berdasarkan output, PC1 dan PC2 mampu menjelaskan sebesar 86,27% total keragaman dari data, sehingga ke-4 variabel dapat direduksi menjadi 2 variabel dalam bentuk komponen utama, yaitu sebanyak 2 komponen utama.
 
-#### 4. Melakukan Analisis Cluster Hierarki ####
+## 4. Melakukan Analisis Cluster Hierarki ##
 - Menghitung Matriks Jarak Euclidean
 ```
 > jarak <- dist(data, method = "euclidean");jarak
@@ -447,7 +446,7 @@ Nilai korelasi untuk Centroid Linkage sebesar **80,39%**
 ```
 Berdasarkan output perbandingan korelasi, dapat diketahui bahwa metode **Average Linkage** adalah metode yang terbaik untuk mengukur kedekatan dua cluster.
 
-#### 5. Pemilihan Jumlah Cluster Optimal ####
+## 5. Pemilihan Jumlah Cluster Optimal ##
 ## Menggunakan Indeks Validitas ##
 ```
 > inval <- clValid(obj = data.frame(data), nClust = 2:5, clMethods = "hierarchical", validation = "internal", metric = "euclidean", method = "average", maxitems = length(data), verbose = T)
@@ -492,7 +491,7 @@ Hit <Return> to see next plot: Silhouette
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/2bc882c2-3558-4cee-b625-0fa0047a39e7)
 Berdasarkan ouptut, dapat diketahui bahwa banyaknya cluster yang optimal sebanyak **3 cluster** menggunakan Indeks Connectivity, Dunn, dan Silhouette.
 
-#### 6. Melakukan Analisis Cluster Metode Terbaik ####
+## 6. Melakukan Analisis Cluster Metode Terbaik ##
 ```
 > hirave <- hclust(jarak, method = "average");hirave
 
@@ -542,7 +541,7 @@ Number of objects: 34
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/78907471-39dd-4f46-b783-2c261b6f9ca7)
 Berdasarkan output dan plot Dendogram, dapat diketahui masing-masing aggota dari setiap cluster.
 
-#### 7. Karakteristik Tiap Cluster ####
+## 7. Karakteristik Tiap Cluster ##
 ```
 > aggregate(Data,list(idclus),mean)
   Group.1       X1       X2       X3       X4
