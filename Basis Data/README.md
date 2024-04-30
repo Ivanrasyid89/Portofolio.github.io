@@ -31,4 +31,28 @@ INNER JOIN sales
 ON product.`Product ID` = sales.`Product ID`
 WHERE sales.`Discount` = '0.2';
 ```
+<img width="366" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/985de9ef-d360-4905-b1ca-b95278f07c54">
 
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan nama tabel utama (Tabel Product) yang digunakan
+- Baris ketiga menunjukkan penggabungan antara kedua tabel (Tabel Product dan Tabel Sales) yang digunakan
+- Baris keempat menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama (Product ID)
+- Baris kelima menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu ('02')
+
+## Menampilkan Order ID, Customer ID, Product ID, Ship Mode dengan LEFT JOIN ##
+```
+SELECT orders.`Order ID`, orders.`Customer ID`, orders.`Product ID`, ship.`Ship Mode`
+FROM orders
+LEFT JOIN ship
+ON orders.`Order ID` = ship.`Order ID`
+AND orders.`Customer ID` = ship.`Customer ID`;
+```
+<img width="364" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/b2edf1ad-08c8-4d47-94a4-6093241eb41d">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan nama tabel utama (Tabel Orders) yang digunakan
+- Baris ketiga menunjukkan penggabungan antara tabel utama (Tabel Orders) di sebelah kiri dengan tabel kedua (Tabel Ship) di sebelah kanan
+- Baris keempat menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Order ID)
+- Baris kelima menunjukkan kondisi kedua antara dua tabel yang memiliki kolom yang sama (Customer ID)
