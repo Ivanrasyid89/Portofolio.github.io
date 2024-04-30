@@ -95,7 +95,7 @@ plot(inval)
 matriks_jarak <- dist(data, method = "euclidean", diag = F)
 ## Metode Average Linkage ##
 hirave <- hclust(matriks_jarak, method = "average");hirave
-plot(hirave, labels(Data_Cluster$Provinsi), hang = 1, col = "blue", main = "Cluster Dendogram", sub = " ", xlab = "PROVINSI", ylab = "Jarak")
+plot(hirave, labels(Data_Cluster$Provinsi), hang = 1, col = "blue", main = "Cluster Dendogram", sub = " ", xlab = "PROVINSI", ylab = "Jarak Euclidean")
 rect.hclust(hirave, k = 3, border = 2:5)
 ## Anggota Kluster ##
 anggotaave <- data.frame(id = Data_Cluster$Provinsi, cutree(hirave, k = 3));anggotaave
@@ -103,5 +103,5 @@ clus_hier <- eclust(datastand, "hclust", k = 3, hc_method = "average", graph = T
 fviz_dend(clus_hier, rect = TRUE, cex = 0.5)
 ## Karakteristik Kluster
 idclus = clus_hier$cluster;idclus
-aggregate(Data_Cluster[,2:5],list(idclus),mean)
+aggregate(Data,list(idclus),mean)
 
