@@ -75,7 +75,7 @@ Penjelasan:
 ## Menampilkan Total Penjualan (Sales) berdasarkan Kategori (Category) Produk ##
 ```
 SELECT product.`Product ID`, product.`Category`, 
-SUM(sales.`Sales`) AS Total_Sales
+       SUM(sales.`Sales`) AS Total_Sales
 FROM product
 INNER JOIN sales
 ON product.`Product ID` = sales.`Product ID`
@@ -94,7 +94,7 @@ Penjelasan:
 ## Menampilkan Rata-rata Penjualan (Sales) berdasarkan Kategori Produk di setiap Negara (Country/Region) dan Kota (City) ##
 ```
 SELECT product.`Product ID`, product.`Category`, customer.`Country/Region`, customer.`City`, orders.`Customer ID`,
-AVG(sales.`Sales`) AS Rata_Rata_Penjualan
+       AVG(sales.`Sales`) AS Rata_Rata_Penjualan
 FROM product
 JOIN orders ON product.`Product ID` = orders.`Product ID`
 JOIN customer ON orders.`Customer ID` = customer.`Customer ID`
@@ -119,7 +119,7 @@ Penjelasan:
 ## Menampilkan Total Penjualan (Sales) pada Tanggal Pemesanan (Order Date) '08/11/2020' ##
 ```
 SELECT ship.`Order Date`, ship.`Order ID`, ship.`Customer ID`, orders.`Product ID`,
-SUM(sales.`Sales`) AS Total_Sales
+       SUM(sales.`Sales`) AS Total_Sales
 FROM ship
 JOIN orders ON ship.`Order ID` = orders.`Order ID` AND ship.`Customer ID` = orders.`Customer ID`
 JOIN sales ON orders.`Product ID` = sales.`Product ID`
@@ -129,9 +129,50 @@ WHERE ship.`Order Date` = '08/11/2020';
 
 Penjelasan:
 - Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
-- Baris kedua menunjukkan fungsi agregate total dari Total Penjualan (Sales) yang ditampilkan dalam kolom Rata-Total_Sales
+- Baris kedua menunjukkan fungsi agregate total dari Total Penjualan (Sales) yang ditampilkan dalam kolom Total_Sales
 - Baris ketiga menunjukkan nama tabel utama (Tabel Ship) yang digunakan
 - Baris keempat menunjukkan penggabungan tabel Ship dengan tabel Orders berdasarkan kriteria Order ID dan Customer ID
 - Baris kelima menunjukkan penggabungan tabel Product dengan tabel Sales berdasarkan kriteria Product ID
 - Baris keenam menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu ('08/11/2020')
 
+## Menampilkan Nama Produk (Product Name) berdasarkan Jumlah Produk (Quantity) tertinggi ##
+```
+SELECT sales.`Quantity`, product.`Product ID`, product.`Product Name`
+FROM sales
+INNER JOIN product
+ON sales.`Product ID` = product.`Product ID`
+ORDER BY sales.`Quantity` DESC
+LIMIT 8
+;
+```
+<img width="360" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/44a8b004-66a5-47ee-ba35-551ea7780ef9">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan nama tabel utama (Tabel Sales) yang digunakan
+- Baris ketiga menunjukkan penggabungan antara kedua tabel (Tabel Product dan Tabel Sales) yang digunakan
+- Baris keempat menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Product ID)
+- Baris kelima menunjukkan mengurutkan hasil berdasarkan Quantity dari yang paling tinggi
+- Baris keenam menunjukkan batas baris yang memiliki Quantiti tertinggi
+- Baris kesembilan menunjukkan akhir dari sebuah pernyataan SQL
+
+## Menampilkan Nama Produk dan Kategori berdasarkan Total Produk yang memiliki Diskon lebih dari 10%
+```
+SELECT product.`Product Name`, product.`Category`,
+       COUNT(*) AS Total_Products
+FROM sales
+INNER JOIN product
+ON sales.`Product ID` = product.`Product ID`
+WHERE sales.`Discount` > 0.1
+GROUP BY product.`Product Name`, product.`Category`;
+```
+<img width="360" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/313868c0-5ee2-44cc-a853-8e116a7b13f8">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan fungsi agregate total dari Total Produk (Product) yang ditampilkan dalam kolom Total_Products
+- Baris ketiga menunjukkan nama tabel utama (Tabel Sales) yang digunakan
+- Baris keempat menunjukkan penggabungan antara kedua tabel (Tabel Product dan Tabel Sales) yang digunakan
+- Baris kelima menunjukkan kondisi pertama antara dua tabel yang memiliki kolom yang sama (Product ID)
+- Baris keenam menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu ('Discount' > 0.1)
+- Baris ketujuh menunjukkan klausa untuk mengelompokkan baris berdasarkan nilai tertentu dari suatu kolom (Kolom Product Name dan Category)
