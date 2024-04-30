@@ -489,7 +489,8 @@ Hit <Return> to see next plot: Silhouette
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/1d30c83a-80eb-4fe8-bf41-7121a798d7af)
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/b6afc4c4-85dc-4e0e-977b-95f9f3a04f99)
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/2bc882c2-3558-4cee-b625-0fa0047a39e7)
-Berdasarkan ouptut, dapat diketahui bahwa banyaknya cluster yang optimal sebanyak **3 cluster** menggunakan Indeks Connectivity, Dunn, dan Silhouette.
+
+Berdasarkan output, dapat diketahui bahwa banyaknya cluster yang optimal sebanyak **3 cluster** menggunakan Indeks Connectivity, Dunn, dan Silhouette.
 
 ## 6. Melakukan Analisis Cluster Metode Terbaik ##
 ```
@@ -539,6 +540,7 @@ Number of objects: 34
 34                PAPUA                     3
 ```
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/78907471-39dd-4f46-b783-2c261b6f9ca7)
+
 Berdasarkan output dan plot Dendogram, dapat diketahui masing-masing aggota dari setiap cluster.
 
 ## 7. Karakteristik Tiap Cluster ##
