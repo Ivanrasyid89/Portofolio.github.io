@@ -6,7 +6,7 @@ Tugas Praktikum pada Mata Kuliah Basis Data. Data yang digunakan adalah Data Sup
 5. Data Sales : Product ID, Sales, Quantity, Discount, Profit
 
 # Perintah #
-## 1. Menampilkan Order ID, Customer ID, Country/Region, City, State, Postal Code, Region yang memiliki Order Date = “09/12/2020” menggunakan INNER JOIN ##
+## Menampilkan Order ID, Customer ID, Country/Region, City, State, Postal Code, Region yang memiliki Order Date = “09/12/2020” menggunakan INNER JOIN ##
 ```
 SELECT ship.`Order ID`, customer.`Customer ID`, customer.`Country/Region`, customer.`City`, customer.`State`, customer.`Postal Code`, customer.`Region`
 FROM ship 
