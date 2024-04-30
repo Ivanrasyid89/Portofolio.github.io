@@ -15,3 +15,10 @@ ON ship.`Customer ID` = customer.`Customer ID`
 WHERE ship.`Order Date` = '12/06/2020';
 ```
 <img width="425" alt="image" src="https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/8b5960a4-12dd-4f8e-927c-166e5f5f3806">
+
+Penjelasan:
+- Baris pertama menunjukkan kolom-kolom yang akan ditampilkan dalam kueri
+- Baris kedua menunjukkan nama tabel yang digunakan
+- Baris ketiga menunjukkan penggabungan antara kedua tabel yang digunakan
+- Baris kelima menunjukkan kondisi antara dua tabel yang memiliki kolom yang sama
+- Baris keenam menunjukkan klausa untuk menyaring baris yang ditampilkan dalam kondisi tertentu
