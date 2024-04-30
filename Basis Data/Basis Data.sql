@@ -39,47 +39,32 @@ FROM product
 RIGHT JOIN sales
 ON product.`Product ID` = sales.`Product ID`;
 
--- Menampilkan Total Penjualan (Sales) berdasarkan Kategori Produk (Category)
-SELECT product.`Product ID`, product.`Category`, product.`Sub-Category`, product.`Product Name`, 
-SUM(sales.`Sales`) AS Total_Sales
+-- Menampilkan Total Penjualan (Sales) berdasarkan Kategori (Category) Produk
+SELECT product.`Product ID`, product.`Category`, 
+       SUM(sales.`Sales`) AS Total_Sales
 FROM product
 INNER JOIN sales
 ON product.`Product ID` = sales.`Product ID`
 GROUP BY product.`Category`;
 
--- Menampilkan Rata-rata Penjualan (Sales) berdasarkan Kategori Produk di setiap Negara/Wilayah (State/Region)
-SELECT product.`Product ID`, product.`Category`, customer.`Region`, customer.`State`, orders.`Customer ID`,
-AVG(sales.`Sales`) AS Rata_Rata_Penjualan
+-- Menampilkan Rata-rata Penjualan (Sales) berdasarkan Kategori Produk di setiap Negara (Country/Region) dan Kota (City)
+SELECT product.`Product ID`, product.`Category`, customer.`Country/Region`, customer.`City`, orders.`Customer ID`,
+       AVG(sales.`Sales`) AS Rata_Rata_Penjualan
 FROM product
 JOIN orders ON product.`Product ID` = orders.`Product ID`
 JOIN customer ON orders.`Customer ID` = customer.`Customer ID`
 INNER JOIN sales
 ON product.`Product ID` = sales.`Product ID`
-GROUP BY product.`Category`
+GROUP BY product.`Category`, customer.`Country/Region`, customer.`City`
 ;
 
--- Menampilkan Total Penjualan (Sales) tiap Tanggal Pemesanan (Order Date)
-SELECT ship.`Order Date`, ship.`Order ID`, ship.`Customer ID`, orders.`Product ID`, sales.`Sales`
+-- Menampilkan Total Penjualan (Sales) pada Tanggal Pemesanan (Order Date) '08/11/2020'
+SELECT ship.`Order Date`, ship.`Order ID`, ship.`Customer ID`, orders.`Product ID`,
+       SUM(sales.`Sales`) AS Total_Sales
 FROM ship
 JOIN orders ON ship.`Order ID` = orders.`Order ID` AND ship.`Customer ID` = orders.`Customer ID`
 JOIN sales ON orders.`Product ID` = sales.`Product ID`
 WHERE ship.`Order Date` = '08/11/2020';
-
--- Menampilkan Total Penjualan (Sales) berdasarkan Kategori Produk (Category) di setiap Negara/Wilayah (State/Region)
-SELECT customer.`State`, customer.`Region`, orders.`Customer ID`, product.`Product ID`, product.`Category`, sales.`Sales`
-FROM customer
-JOIN orders ON customer.`Customer ID` = orders.`Customer ID`
-JOIN product ON orders.`Product ID` = product.`Product ID`
-JOIN sales ON product.`Product ID` = sales.`Product ID`;
-
--- Menampilkan Total Penjualan (Sales) berdasarkan Segmentasi Pelanggan (Segment) dan Negara/Wilayah (State/Region) di setiap Kategori Produk (Category)
-SELECT product.`Product ID`, product.`Category`, orders.`Customer ID`, customer.`Segment`, customer.`State`, customer.`Region`, sales.`Sales`
-FROM product
-JOIN orders ON product.`Product ID` = orders.`Product ID`
-JOIN customer ON orders.`Customer ID` = customer.`Customer ID`
-INNER JOIN sales
-ON product.`Product ID` = sales.`Product ID`
-;
 
 -- Menampilkan Nama Produk (Product Name) berdasarkan Jumlah Produk (Quantity) tertinggi
 SELECT sales.`Quantity`, product.`Product ID`, product.`Product Name`
@@ -87,11 +72,14 @@ FROM sales
 INNER JOIN product
 ON sales.`Product ID` = product.`Product ID`
 ORDER BY sales.`Quantity` DESC
+LIMIT 8
 ;
 
--- Menampilkan Nama Produk (Product Name) dan Kategori (Category) berdasarkan Jumlah Penjualan (Sales) yang memiliki Diskon (Discount) lebih dari 10%
-SELECT sales.`Quantity`, sales.`Discount`, product.`Product Name`, product.`Product ID`, product.`Category`
+-- Menampilkan Nama Produk dan Kategori berdasarkan Total Produk yang memiliki Diskon lebih dari 10%
+SELECT product.`Product Name`, product.`Category`,
+       COUNT(*) AS Total_Products
 FROM sales
 INNER JOIN product
 ON sales.`Product ID` = product.`Product ID`
-WHERE sales.`Discount` > 0.1;
+WHERE sales.`Discount` > 0.1
+GROUP BY product.`Product Name`, product.`Category`;
