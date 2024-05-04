@@ -1,4 +1,5 @@
 Data yang digunakan adalah data Classification of Heart Disease yang dapat diakses pada alamat laman: https://www.kaggle.com/datasets/mexwell/heart-disease-dataset/data?select=documentation.pdf
+
 Data terdiri dari 11 fitur dan 1 target, dengan rincian sebagai berikut:
 - Fitur 1 : Age 
 - Fitur 2 : Sex
@@ -12,4 +13,5 @@ Data terdiri dari 11 fitur dan 1 target, dengan rincian sebagai berikut:
 - Fitur 10 : Oldpeak 
 - Fitur 11 : ST Slope
 - Target : Class
+
 Model Machine Learning yang digunakan adalah K-Nearest Neighbors dan Support Vector Machine
