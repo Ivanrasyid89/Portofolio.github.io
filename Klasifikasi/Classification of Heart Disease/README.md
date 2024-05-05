@@ -32,3 +32,14 @@ Secara ilustratif, proporsi orang yang terkena penyakit jantung sebesar 52,9%, s
 ### Korelasi ###
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/a0503697-1d04-44a1-b44f-3a4e94edf236)
 
+## Data Preprocessing ##
+### Data Cleaning ###
+```
+# Mengganti nilai yang negatif dengan rata-rata
+data.loc[data['oldpeak'] < 0, 'oldpeak'] = data['oldpeak'].mean()
+# Mengganti nilai 'ST slope' yang sama dengan 0 dengan modus
+modus_st_slope = data['ST slope'].mode()[0]
+data.loc[data['ST slope'] == 0, 'ST slope'] = modus_st_slope
+data.describe()
+```
+Data yang cleaning adalah tahapan yang penting sebelum melakukan analisis lebih lanjut. Pada tahap ini, fitur oldpeak yang memiliki nilai negatif diganti dengan rata-ratanya, sedangkan fitur ST slope yang memiliki nilai nol diganti dengan modus.
