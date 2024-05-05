@@ -103,6 +103,7 @@ Data dipartisi menjadi data training dan data testing secara random. Data traini
 - X_test menunjukkan fitur-fitur yang digunakan untuk menguji model (238 baris dan 11 kolom)
 - y_train menunjukkan target yang digunakan untuk melatih model (952 baris)
 - y_test menunjukkan target yang digunakan untuk menguji model (238 kolom)
+
 Keempat komponen tersebut harus ada sebelum melakukan pemodelan.
 
 ## Modelling ##
