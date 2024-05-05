@@ -260,3 +260,90 @@ Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, 
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/c61baf0b-9c8b-434e-b2ea-5df7cbd182f3)
 
 Kurva ROC menunjukkan kinerja algoritma dalam mengklasifikasikan dengan ambang batas keputusan yang berbeda. Plot antara True Positif dan False Positif, sedangkan skor ROC merangkum kinerja algortima di setiap ambang batas keputusan. Dalam hal ini, skor ROC model K-NN sebesar 83,96%, semakin tinggi skor ROC maka semakin baik algoritma mampu membedakan kelas positif dan negatif.
+
+### Algoritma SVM ###
+#### Menghitung metrik evaluasi ####
+```
+## Mengevaluasi model SVM ##
+# Menguji model menggunakan data uji (X_test)
+y_pred_svm = best_svm.predict(X_test)
+# Menghitung metrik evaluasi: akurasi, presisi, recall, dan F1 score
+accuracy = accuracy_score(y_test, y_pred_svm)
+precision = precision_score(y_test, y_pred_svm)
+recall = recall_score(y_test, y_pred_svm)
+f1 = f1_score(y_test, y_pred_svm)
+# Menampilkan metrik evaluasi
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1 Score:", f1)
+```
+- Akurasi : 89,07%. Model SVM mampu membuat prediksi yang benar (kelas positif dan kelas negatif) dari total prediksi yang dilakukan, yaitu sebesar 89,07%. Semakin besar akurasi, maka semakin baik model yang digunakan untuk melakukan tugas klasifikasi.
+- Presisi : 87,23%. Model SVM mampu membuat prediksi yang benar bagi kelas positif dari total prediksi positif yang dilakukan, yaitu sebesar 87,23%. Semakin besar presisi, maka semakin baik model mengidentifikasi kelas positif tanpa salah mengidentifikasi kelas negatif sebagai kelas positif.
+- Recall : 93,89%. Model SVM mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 93,89%.
+- F1-score : 90,44%. Model SVM mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 90,44%. 
+
+#### Kurva ROC ####
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/77c81e46-1788-4a4d-8427-2553510230d5)
+
+Kurva ROC menunjukkan kinerja algoritma dalam mengklasifikasikan dengan ambang batas keputusan yang berbeda. Plot antara True Positif dan False Positif, sedangkan skor ROC merangkum kinerja algortima di setiap ambang batas keputusan. Dalam hal ini, skor ROC model SVM sebesar 88,54%, semakin tinggi skor ROC maka semakin baik algoritma mampu membedakan kelas positif dan negatif.
+
+## Prediction ##
+### Algoritma K-NN ###
+```
+# Membuat data baru dalam bentuk array
+data_baru = np.array([[40, 1, 1, 140, 237, 1, 0, 150, 1, 1.0, 2]])
+# 1. Memilih banyaknya tetangga (k = 30)
+k = k
+# 2. Menghitung jarak titik data baru dengan data lama (X_train) menggunakan jarak Euclidean
+jarak_euclidean = np.sqrt(np.sum((X_train - data_baru) ** 2, axis=1))
+# 3. Mengambil k terdekat
+indeks_terdekat = np.argsort(jarak_euclidean)[:k]
+# 4. Menghtung jumlah titik data dalam setiap kategori di antara 30 tetangga terdekat
+jumlah_kelas_0 = np.sum(y_train.iloc[indeks_terdekat] == 0)
+jumlah_kelas_1 = np.sum(y_train.iloc[indeks_terdekat] == 1)
+# 5. Menetapkan data baru ke dalam kategori yang memiliki jumlah tetangga terbanyak
+hasil_prediksi = 1 if jumlah_kelas_1 > jumlah_kelas_0 else 0
+# Cetak hasil prediksi
+if hasil_prediksi == 0:
+    print("Hasil Prediksi : Normal")
+else:
+    print("Hasil Prediksi : Penyakit Jantung")
+```
+Dengan menggunakan k = 30 dan jarak euclidean, algoritma K-NN mengklasifikasikan data baru ke dalam kelas "Penyakit Jantung".
+
+### Algoritma SVM ###
+```
+# Mendefinisikan fungsi untuk menghitung nilai kernel antara fitur dan terget
+def fungsi_kernel(X, Y):
+    if kernel == 'rbf':
+        # Rumus fungsi kernel RBF
+        return np.exp(-gamma * np.linalg.norm(X - Y) ** 2)
+    elif kernel == 'linear':
+        # Rumus fungsi kernel linear
+        return np.dot(X, Y.T)
+    elif kernel == 'poly':
+        # Rumus fungsi kernel polynomial
+        return (gamma * np.dot(X, Y.T) + 1) ** best_svm.degree
+# Menghitung nilai prediksi
+# Mendefinisikan fungsi prediksi
+def prediksi(data_baru):
+    # Melakukan inisialisasi
+    hasil_prediksi = bias
+    # Looping for untuk melakukan prediksi
+    for i in range(len(alpha[0])):
+        # Menghitung prediksi
+        hasil_prediksi += alpha[0][i] * best_svm.dual_coef_[0][i] * fungsi_kernel(support_vectors[i], data_baru)
+    return np.sign(hasil_prediksi).astype(int)
+# Melakukan prediksi
+Y_pred_svm = prediksi(data_baru)
+if Y_pred_svm == 0:
+    print("Hasil Prediksi : Normal")
+else:
+    print("Hasil Prediksi : Penyakit Jantung")
+```
+Dengan menggunakan fungsi kernel RBF, kombinasi parameter yang optimal adalah Cost = 10, gamma = 0,090. Data baru diklasifikasikan ke dalam kelas "Penyakit Jantung".
+
+## Kesimpulan ##
+Berdasarkan metrik evaluasi dan skor ROC, algoritma yang terbaik untuk klasifikasi penyakit jantung adalah algoritma SVM, karena memiliki kinerja yang lebih baik dibandingkan algoritma K-NN. 
+
