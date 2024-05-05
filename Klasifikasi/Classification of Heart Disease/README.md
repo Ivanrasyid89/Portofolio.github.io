@@ -18,24 +18,9 @@ Model Machine Learning yang digunakan adalah K-Nearest Neighbors dan Support Vec
 
 # Langkah-langkah Analisis #
 ## Exploratory Data Analysis ##
-```
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 1190 entries, 0 to 1189
-Data columns (total 12 columns):
- #   Column               Non-Null Count  Dtype  
----  ------               --------------  -----  
- 0   age                  1190 non-null   int64  
- 1   sex                  1190 non-null   int64  
- 2   chest pain type      1190 non-null   int64  
- 3   resting bp s         1190 non-null   int64  
- 4   cholesterol          1190 non-null   int64  
- 5   fasting blood sugar  1190 non-null   int64  
- 6   resting ecg          1190 non-null   int64  
- 7   max heart rate       1190 non-null   int64  
- 8   exercise angina      1190 non-null   int64  
- 9   oldpeak              1190 non-null   float64
- 10  ST slope             1190 non-null   int64  
- 11  target               1190 non-null   int64  
-dtypes: float64(1), int64(11)
-memory usage: 111.7 KB
-```
+1. Visualisasi data numerik
+   ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/3eecf908-6a1b-47a3-a319-502ef5f293de)
+
+   Berdasarkan box-plot, secara ilustratif dapat diperoleh informasi sebagai berikut.
+   - Rata-rata usia 53 tahun 
+3. 
