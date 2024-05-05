@@ -108,3 +108,111 @@ Keempat komponen tersebut harus ada sebelum melakukan pemodelan.
 ## Modelling ##
 ### Algoritma K-NN ###
 #### Menentukan banyaknya k (tetangga) ####
+```
+## Menentukan nilai k menggunakan akar dari banyaknya observasi ##
+# Fungsi untuk menghitung nilai k
+def hitung_k(data):
+    # Menghitung jumlah observasi dalam data training
+    n = len(X_train)
+    # Menentukan nilai k dengan mengambil akar dari jumlah observasi
+    k = int(np.sqrt(n))
+    return k
+# Mendefinisikan data
+data = [X_train]
+# Menghitung k
+k = hitung_k(data)
+# Menampilkan k
+print("Nilai k yang ditentukan:", k)
+```
+Salah satu cara untuk menentukan banyaknya tetangga adalah akar dari banyaknya observasi data training. Dalam hal ini, banyaknya k yang digunakan adalah sebanyak 30.
+
+#### Melatih model K-NN ####
+```
+## Membangun model KNN ##
+# Membuat model KNN menggunakan k optimal dan jarak euclidean
+model_knn = KNeighborsClassifier(n_neighbors = k, weights='uniform', algorithm='auto', metric='euclidean')
+# Melatih model KNN menggunakan data latih
+model_knn.fit(X_train, y_train)
+```
+Dalam membangun model K-NN, jarak yang digunakan untuk mengukur kedekatan titik data baru dengan tetangga adalah jarak Euclidean.
+
+### Support Vector Machine ###
+#### Melatih Model SVM ####
+```
+## Membangun model SVM ##
+# Membuat model SVM
+modelsvm = SVC()
+# Melakukan tuning parameter
+param_grid = {
+    'C': [0.1, 1, 10, 100],
+    'kernel': ['linear', 'rbf', 'poly'],
+    'gamma': ['scale', 'auto'],
+    'degree': [2, 3, 4]
+}
+grid_search = GridSearchCV(modelsvm, param_grid, cv=5)
+# Menemukan kombinasi parameter optimal
+grid_search.fit(X_train, y_train)
+# Kombinasi parameter optimal
+best_svm = grid_search.best_estimator_
+# Menampilkan parameter optimal
+print('Kombinasi parameter optimal:',  grid_search.best_params_)
+```
+Sebelum melatih model SVM, perlu ditetapkan terlebih dahulu ruang pencarian parameter internal dan fungsi kernel.
+
+#### Tuning parameter ####
+```
+## Tuning parameter ##
+# Inisialisasi daftar parameter yang akan diuji
+nilai_C = [0.1, 1, 10, 100]
+fungsi_kernel = ['linear', 'rbf', 'poly']
+nilai_gamma = ['scale', 'auto']
+derajat_poly = [2, 3, 4]
+
+# Inisialisasi variabel untuk menyimpan parameter terbaik dan akurasi terbaik
+best_params = {}
+best_accuracy = 0.0
+
+# Inisialisasi objek KFold untuk validasi silang
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Inisialisasi variabel untuk menyimpan akurasi dari setiap iterasi
+all_accuracies = []
+
+# Melakukan iterasi untuk setiap kombinasi parameter
+for C in nilai_C:
+    for kernel in fungsi_kernel:
+        for gamma in nilai_gamma:
+            for degree in derajat_poly:
+                # Inisialisasi model SVM dengan parameter tertentu
+                modelsvm = SVC(C=C, kernel=kernel, gamma=gamma, degree=degree)
+                # Menyimpan akurasi
+                accuracies = []
+                # Melakukan validasi silang
+                for train_index, val_index in kf.split(X_train):
+                    X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[val_index]
+                    y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[val_index]
+                    # Melatih model pada setiap lipatan
+                    modelsvm.fit(X_train_fold, y_train_fold)
+                    # Mengukur akurasi pada setiap lipatan
+                    y_pred_fold = modelsvm.predict(X_val_fold)
+                    accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
+                    accuracies.append(accuracy_fold)
+                # Menghitung rata-rata akurasi dari semua lipatan
+                mean_accuracy = np.mean(accuracies)
+                # Memeriksa apakah akurasi yang dihasilkan lebih baik dari yang sebelumnya
+                if mean_accuracy > best_accuracy:
+                    best_accuracy = mean_accuracy
+                    best_params = {'C': C, 'kernel': kernel, 'gamma': gamma, 'degree': degree}
+                # Menyimpan akurasi dari setiap iterasi
+                all_accuracies.append({'C': C, 'kernel': kernel, 'gamma': gamma, 'degree': degree, 'accuracy': mean_accuracy})
+
+# Menampilkan parameter terbaik
+print('Kombinasi parameter optimal:', best_params)
+
+# Menampilkan akurasi dari setiap iterasi
+print("Akurasi dari setiap iterasi:")
+for i, acc in enumerate(all_accuracies, 1):
+    print(f"Iterasi {i}: C={acc['C']}, kernel={acc['kernel']}, gamma={acc['gamma']}, degree={acc['degree']}, Accuracy={acc['accuracy']}")
+```
+Salah satu teknik yang digunakan untuk menemukan kombinasi parameter optimal adalah Grid Search dengan pendekatan Cross Validation. Dalam hal ini, cross validation menggunakan lipatan (fold) sebanyak 5 untuk mempercepat proses komputasi. Cara kerja Grid Search CV ini adalah membagi data training ke dalam lipatan-lipatan dengan ukuran yang sama besar, setiap lipatan terdiri atas data training dan data testing, kemudian Grid Search berusaha mencoba keseluruhan kombinasi parameter dalam rentang yang telah ditentukan, kombinasi parameter tersebut dievaluasi menggunakan CV, kemudian dihitung akurasinya. Hal ini dilakukan dengan cara yang sama, di mana setiap kombinasi parameter yang telah dicoba, dihitung rata-rata akurasinya dari setiap lipatan. Kemudian melakukan iterasi kombinasi parameter lainnya, hingga diperoleh rata-rata akurasi yang paling besar. Adapun kombinasi parameter optimal terletak pada iterasi ke-46 dengan nilai akurasi sebesar 87,07%.
+
