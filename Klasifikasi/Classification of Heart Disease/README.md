@@ -76,3 +76,35 @@ scaled_data = scale_data(data)
 print(scaled_data)
 ```
 Melakukan transformasi pada setiap data numerik sehingga hasil transformasi memiliki nilai tengah 0 dan simpangan baku 1. Hal ini bertujuan untuk menyeragamkan skala data yang digunakan.
+
+### Split Data ###
+```
+## Split data ke dalam fitur (X) dan target (Y) ##
+# Fitur X
+X = scale_data(data.drop('target', axis=1))
+# Target Y
+y = scaled_data['target']
+```
+Sebelum melakukan analisis, data dipecah terlebih dahulu menjadi dua bagian, yaitu fitur (X) dan target (Y).
+
+### Partisi Data ###
+```
+## Partisi data ##
+# Partisi data ke dalam data latih (80%) dan data uji (20%)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42)
+# Menampilkan dimensi data
+print(f"X_train : {X_train.shape}")
+print(f"X_test : {X_test.shape}")
+print(f"y_train : {y_train.shape}")
+print(f"y_test : {y_test.shape}")
+```
+Data dipartisi menjadi data training dan data testing secara random. Data training sebanyak 80% dari data keseluruhan, sedangkan data testing sebanyak 20% dari data keseluruhan.
+- X_train menunjukkan fitur-fitur yang digunakan untuk melatih model (952 baris dan 11 kolom)
+- X_test menunjukkan fitur-fitur yang digunakan untuk menguji model (238 baris dan 11 kolom)
+- y_train menunjukkan target yang digunakan untuk melatih model (952 baris)
+- y_test menunjukkan target yang digunakan untuk menguji model (238 kolom)
+Keempat komponen tersebut harus ada sebelum melakukan pemodelan.
+
+## Modelling ##
+### Algoritma K-NN ###
+#### Menentukan banyaknya k (tetangga) ####
