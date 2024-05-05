@@ -43,3 +43,11 @@ data.loc[data['ST slope'] == 0, 'ST slope'] = modus_st_slope
 data.describe()
 ```
 Data yang cleaning adalah tahapan yang penting sebelum melakukan analisis lebih lanjut. Pada tahap ini, fitur oldpeak yang memiliki nilai negatif diganti dengan rata-ratanya, sedangkan fitur ST slope yang memiliki nilai nol diganti dengan modus.
+
+### Missing Value ###
+```
+# Memeriksa jumlah missing value di setiap kolom
+missing_values = data.isnull().sum()
+print(missing_values)
+```
+Pemeriksaan missing value penting dilakukan karena dapat mempengaruhi kinerja algoritma. Dari ke 11 fitur dan 1 target, tidak terdapat nilai yang hilang, sehingga dapat dilanjutkan ke tahap berikutnya.
