@@ -136,7 +136,7 @@ model_knn.fit(X_train, y_train)
 ```
 Dalam membangun model K-NN, jarak yang digunakan untuk mengukur kedekatan titik data baru dengan tetangga adalah jarak Euclidean.
 
-### Support Vector Machine ###
+### Algoritma SVM ###
 #### Melatih Model SVM ####
 ```
 ## Membangun model SVM ##
@@ -216,3 +216,46 @@ for i, acc in enumerate(all_accuracies, 1):
 ```
 Salah satu teknik yang digunakan untuk menemukan kombinasi parameter optimal adalah Grid Search dengan pendekatan Cross Validation. Dalam hal ini, cross validation menggunakan lipatan (fold) sebanyak 5 untuk mempercepat proses komputasi. Cara kerja Grid Search CV ini adalah membagi data training ke dalam lipatan-lipatan dengan ukuran yang sama besar, setiap lipatan terdiri atas data training dan data testing, kemudian Grid Search berusaha mencoba keseluruhan kombinasi parameter dalam rentang yang telah ditentukan, kombinasi parameter tersebut dievaluasi menggunakan CV, kemudian dihitung akurasinya. Hal ini dilakukan dengan cara yang sama, di mana setiap kombinasi parameter yang telah dicoba, dihitung rata-rata akurasinya dari setiap lipatan. Kemudian melakukan iterasi kombinasi parameter lainnya, hingga diperoleh rata-rata akurasi yang paling besar. Adapun kombinasi parameter optimal terletak pada iterasi ke-46 dengan nilai akurasi sebesar 87,07%.
 
+## Model Evaluation ##
+### Algoritma K-NN ###
+#### Menghitung metriks evaluasi ####
+```
+## Menghitung metrik evaluasi ##
+# Menghitung jumlah prediksi yang benar
+prediksi_benar = np.sum(y_pred_knn == y_test)
+# Menghitung total jumlah prediksi
+total_prediksi = len(y_test)
+# Menghitung akurasi
+accuracy = prediksi_benar / total_prediksi
+
+# Menghitung TP, FN, TN, dan FN
+# Menghitung jumlah positif benar
+TP = np.sum((y_pred_knn == 1) & (y_test == 1))
+# Menghitung jumlah positif salah
+FP = np.sum((y_pred_knn == 1) & (y_test == 0))
+# Menghitung jumlah negatif benar
+TN = np.sum((y_pred_knn == 0) & (y_test == 0))
+# Menghitung jumlah negatif salah
+FN = np.sum((y_pred_knn == 0) & (y_test == 1))
+
+# Menghitung presisi, recall, dan F1 score
+precision = TP / (TP + FP)
+recall = TP / (TP + FN)
+f1 = 2 * (precision * recall) / (precision + recall)
+
+# Menampilkan metrik evaluasi
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1 Score:", f1)
+```
+Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, Recall, dan F1-Score.
+- Akurasi : 84,03%. Model K-NN mampu membuat prediksi yang benar (kelas positif dan kelas negatif) dari total prediksi yang dilakukan, yaitu sebesar 84,03%. Semakin besar akurasi, maka semakin baik model yang digunakan untuk melakukan tugas klasifikasi.
+- Presisi : 86,04%. Model K-NN mampu membuat prediksi yang benar bagi kelas positif dari total prediksi positif yang dilakukan, yaitu sebesar 86,04%. Semakin besar presisi, maka semakin baik model mengidentifikasi kelas positif tanpa salah mengidentifikasi kelas negatif sebagai kelas positif.
+- Recall : 84,73%. Model K-NN mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 84,73%.
+- F1-score : 85,38%. Model K-NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 85,38%. 
+
+#### Kurva ROC ####
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/c61baf0b-9c8b-434e-b2ea-5df7cbd182f3)
+
+Kurva ROC menunjukkan kinerja algoritma dalam mengklasifikasikan dengan ambang batas keputusan yang berbeda. Plot antara True Positif dan False Positif, sedangkan skor ROC merangkum kinerja algortima di setiap ambang batas keputusan. Dalam hal ini, skor ROC model K-NN sebesar 83,96%, semakin tinggi skor ROC maka semakin baik algoritma mampu membedakan kelas positif dan negatif.
