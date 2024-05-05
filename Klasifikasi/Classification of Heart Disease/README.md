@@ -51,3 +51,28 @@ missing_values = data.isnull().sum()
 print(missing_values)
 ```
 Pemeriksaan missing value penting dilakukan karena dapat mempengaruhi kinerja algoritma. Dari ke 11 fitur dan 1 target, tidak terdapat nilai yang hilang, sehingga dapat dilanjutkan ke tahap berikutnya.
+
+### Standarisasi ###
+```
+## Standarisasi data (mean = 0 dan st.dev = 1) ##
+# Mendefinisikan fungsi scale data
+def scale_data(data):
+    # Membuat salinan data
+    scaled_data = data.copy()
+    # Fitur numerik yang akan diskalakan
+    fitur_numerik = ['age', 'resting bp s', 'cholesterol', 'max heart rate', 'oldpeak']
+    # Looping for untuk iterasi setiap fitur numerik
+    for feature in fitur_numerik:
+        # Menghitung rata-rata dari fitur
+        mean = np.mean(data[feature])
+        # Menghitung standar deviasi dari fitur
+        std_dev = np.std(data[feature])
+        # Standarisasi nilai pada fitur
+        scaled_data[feature] = (data[feature] - mean) / std_dev
+    # Mengembalikan nilai ke scaled data
+    return scaled_data
+# Menampilkan data hasil standarisasi
+scaled_data = scale_data(data)
+print(scaled_data)
+```
+Melakukan transformasi pada setiap data numerik sehingga hasil transformasi memiliki nilai tengah 0 dan simpangan baku 1. Hal ini bertujuan untuk menyeragamkan skala data yang digunakan.
