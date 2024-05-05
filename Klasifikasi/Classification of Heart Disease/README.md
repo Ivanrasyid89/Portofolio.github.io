@@ -19,13 +19,16 @@ Model Machine Learning yang digunakan adalah K-Nearest Neighbors dan Support Vec
 # Langkah-langkah Analisis #
 ## Exploratory Data Analysis ##
 ### Visualisasi data numerik ###
-   ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/3eecf908-6a1b-47a3-a319-502ef5f293de)
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/3eecf908-6a1b-47a3-a319-502ef5f293de)
 
 ### Visualisasi data kategorik ###
-   ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/5d782ab8-1bcd-4f50-90d0-35afa9c97239)
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/5d782ab8-1bcd-4f50-90d0-35afa9c97239)
 
 ### Visualisasi target ###
-   ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/f930b24b-c5f3-4fb2-a3b1-22c9ef441843)
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/f930b24b-c5f3-4fb2-a3b1-22c9ef441843)
    
-Secara ilustratif, proporsi orang yang terkena penyakit jantung sebesar 52,9%, sedangkan proporsi orang yang tidak terkena penyakit jantung (norma) sebesar 47,1%. 
+Secara ilustratif, proporsi orang yang terkena penyakit jantung sebesar 52,9%, sedangkan proporsi orang yang tidak terkena penyakit jantung (normal) sebesar 47,1%. 
+
+### Korelasi ###
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/a0503697-1d04-44a1-b44f-3a4e94edf236)
 
