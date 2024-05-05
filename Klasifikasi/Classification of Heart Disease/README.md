@@ -15,3 +15,7 @@ Data terdiri dari 11 fitur dan 1 target, dengan rincian sebagai berikut:
 - Target : Class
 
 Model Machine Learning yang digunakan adalah K-Nearest Neighbors dan Support Vector Machine
+
+# Langkah-langkah Analisis #
+## Exploratory Data Analysis ##
+
