@@ -106,5 +106,6 @@ data.to_excel('Most Subscribed YouTube Channel.xlsx', index=False)
 data.to_csv('Most Subscribed YouTube Channel.csv', index=False)
 ```
 
-# Dashboard #
-![Most Subscribed YouTube Channel_page-0001](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/895bb1d2-2d09-424b-b8fd-04b3a5702ef0)
+# Dashboard with Power BI #
+![Most Subscribed YouTube Channel_page-0001 (1)](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/5f32eb7a-0355-4973-b469-235b76f158cb)
+
