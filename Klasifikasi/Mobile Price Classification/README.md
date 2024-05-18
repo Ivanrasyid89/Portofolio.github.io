@@ -127,10 +127,10 @@ print(f"y_test : {y_test.shape}")
 ```
 Data dipartisi menjadi data training dan data testing secara random. Data training sebanyak 80% dari data keseluruhan, sedangkan data testing sebanyak 20% dari data keseluruhan.
 
-X_train menunjukkan fitur-fitur yang digunakan untuk melatih model (1600 baris dan 20 kolom)
-X_test menunjukkan fitur-fitur yang digunakan untuk menguji model (400 baris dan 20 kolom)
-y_train menunjukkan target yang digunakan untuk melatih model (1600 baris)
-y_test menunjukkan target yang digunakan untuk menguji model (20 kolom)
+X_train menunjukkan fitur-fitur yang digunakan untuk melatih model (1600 baris dan 20 kolom).
+X_test menunjukkan fitur-fitur yang digunakan untuk menguji model (400 baris dan 20 kolom).
+y_train menunjukkan target yang digunakan untuk melatih model (1600 baris).
+y_test menunjukkan target yang digunakan untuk menguji model (20 kolom).
 Keempat komponen tersebut harus ada sebelum melakukan pemodelan.
 
 ## MODELLING ##
@@ -155,7 +155,70 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 ```
-Mengompilasi model dengan menentukan optimizer, fungsi loss, dan metrik evaluasi. Menggunakan optimizer Adam dengan laju pembelajaran sebesar 0.001
+Mengompilasi model dengan menentukan optimizer, fungsi loss, dan metrik evaluasi. Menggunakan optimizer Adam dengan laju pembelajaran sebesar 0.001. Menggunakan fungsi loss sparse_categorical_crossentropy, yang cocok untuk klasifikasi multi-kelas dengan target diskrit. Menggunakan metrik evaluasi akurasi selama pelatihan dan evaluasi model.
+```
 # Latih model
 history = model.fit(train_ds, validation_data=test_ds, epochs=20)
+```
+Melakukan training model menggunakan train_ds dan dataset validasi (test_ds) dengan jumlah iterasi sebanyak 20.
+
+### XGBOOST ###
+```
+model_xgb = XGBClassifier(use_label_encoder=False, eval_metric='mlogloss')
+param_grid = {
+    'learning_rate': [0.1, 0.01, 0.001],
+    # Kedalaman tiap pohon
+    'max_depth': [3, 5, 7],
+    # Jumlah pohon keputusan
+    'n_estimator': [100, 200, 300],
+    # Banyak sampel dalam proses boosting
+    'subsample': [0.6, 0.8, 1.0],
+    # Jumlah minimum sampel
+    'min_child_weight': [1, 3, 5]
+}
+```
+Membangun model model klasifikasi menggunakan algoritma XGBoost dengan metrik evaluasi yang digunakan adalah mlogloss (multiclass log loss), yang digunakan untuk mengevaluasi performa model klasifikasi multi-kelas. 
+```
+# GridSearchCV untuk menemukan parameter optimal
+grid_search = GridSearchCV(model_xgb, param_grid, cv=5, n_jobs=-1, verbose=2)
+grid_search.fit(X_train, y_train)
+```
+Mendefinisikan grid parameter yang akan digunakan untuk mencari kombinasi parameter terbaik menggunakan teknik GridSearchCV. Learning rate mengontrol seberapa besar langkah yang diambil model saat mengoptimalkan bobot. Max depth adalah kedalaman maksimum tiap pohon keputusan. Semakin dalam pohon, semakin kompleks model, namun juga lebih rentan terhadap overfitting. n estimator adalah jumlah pohon keputusan yang akan digunakan dalam model. Semakin banyak pohon, semakin baik performa model, hingga titik tertentu. Subsampel adalah proporsi sampel yang digunakan untuk melatih setiap pohon. Menggunakan subset data dapat membantu mengurangi overfitting. Min child weight adalah jumlah minimum sampel yang diperlukan dalam satu leaf node. Nilai yang lebih tinggi dapat membuat model lebih konservatif.
+```
+# Kombinasi parameter optimal
+best_xgb = grid_search.best_estimator_
+```
+Mendapatkan model dengan parameter terbaik dari hasil pencarian grid.
+```
+# Menampilkan parameter optimal
+print('Kombinasi parameter optimal:', grid_search.best_params_)
+```
+Menampilkan kombinasi parameter terbaik.
+
+## Model Evaluation ##
+### NEURAL NETWORK ###
+```
+accuracy = model.evaluate(test_ds)
+print(f'Accuracy: {accuracy}')
+```
+Menampilkan akurasi dari proses pelatihan model NN.
+```
+# Menghitung metrik evaluasi: akurasi, presisi, recall, dan F1 score
+accuracy_nn = accuracy_score(y_test, y_pred_nn)
+precision_nn = precision_score(y_test, y_pred_nn, average='weighted')
+recall_nn = recall_score(y_test, y_pred_nn, average='weighted')
+f1_nn = f1_score(y_test, y_pred_nn, average='weighted')
+# Menampilkan metrik evaluasi
+print("Accuracy:", accuracy_nn)
+print("Precision:", precision_nn)
+print("Recall:", recall_nn)
+print("F1 Score:", f1_nn)
+```
+Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, Recall, dan F1-Score.
+
+- Akurasi : 95,25%. Model NN mampu membuat prediksi yang benar (kelas positif dan kelas negatif) dari total prediksi yang dilakukan, yaitu sebesar 95,25%. Semakin besar akurasi, maka semakin baik model yang digunakan untuk melakukan tugas klasifikasi.
+- Presisi : 95,32%. Model NN mampu membuat prediksi yang benar bagi kelas positif dari total prediksi positif yang dilakukan, yaitu sebesar 95,32%. Semakin besar presisi, maka semakin baik model mengidentifikasi kelas positif tanpa salah mengidentifikasi kelas negatif sebagai kelas positif.
+- Recall : 95,25%. Model NN mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 95,25%.
+- F1-score : 95,23%. Model NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 95,23%.
+
 
