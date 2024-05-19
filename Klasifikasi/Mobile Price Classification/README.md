@@ -39,6 +39,7 @@ Model Machine Learning yang digunakan adalah Neural Network dan Extreme Gradient
 
 ## Data Preprocessing ##
 ### Standardize ###
+#### Standarisasi Data ####
 ```
 ## Standarisasi data (mean = 0 dan st.dev = 1) ##
 # Mendefinisikan fungsi scale data
@@ -56,7 +57,9 @@ def scale_data(data_train):
 scaled_data_train = scale_data(data_train)
 print(scaled_data_train)
 ```
+Melakukan standarisasi data agar setiap fitur memiliki satuan yang sama.
 ### Feature Engineering ###
+#### Feature Engineering dan Konversi Data ####
 ```
 # Pembuatan kolom fitur untuk masing masing kolom numerik dan kategorik
 kolom_fitur = []
@@ -95,18 +98,21 @@ def data_to_dataset(dataframe, shuffle=True, batch_size=32):
 
   return ds
 ```
+Sebelum melakukan pemodelan NN, data dikonversi terlebih dahulu ke dataset TensorFlow agar bisa dilakukan pembentukan arsitektur NN.
 ### Split Data ###
+#### Partisi Data model NN ####
 ```
 ## Partisi Data untuk model NN ##
 train, test = train_test_split(scaled_data_train, test_size=0.2, random_state=42)
 ```
-Partisi data menjadi data training dan data testing untuk pembentukan model NN
+Partisi data menjadi data training dan data testing untuk pembentukan model NN.
 ```
 # Konversi dataframe train dan test ke dataset tfds
 train_ds = data_to_dataset(train, shuffle = True, batch_size=32)
 test_ds = data_to_dataset(test, shuffle=False, batch_size=32)
 ```
-Konversi data ke dalam TensorFlow Dataset (TFDS) untuk pembentukan model NN menggunakan TensorFlow
+Konversi data ke dalam TensorFlow Dataset (TFDS) untuk pembentukan model NN menggunakan TensorFlow.
+#### Partisi Data Model XGBOOST ####
 ```
 ## Split data ke dalam fitur (X) dan target (Y) ##
 # Fitur X
@@ -148,14 +154,14 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(units=4, activation='softmax')  # 4 kelas untuk 'price_range'
 ])
 ```
-Membuat model Seq dari framework Keras dan menambahkan lapisan fitur yang berisikan kolom numerik dan kategorik yang telah distandarisasi sebelumnya. Menambahkan lapisan Dense (Fully Connected) yang terdiri dari 512, 256, 128, dan 64 neuorn dengan fungsi aktivasinya relu. Menambahkan lapisan dropout dengan probabilitas dropout sebesar 50%. Dropout digunakan untuk mencegah overfitting dengan secara acak menonaktifkan setengah dari neuron di lapisan selama pelatihan berlangsung. Pada lapisan Dense dengan neuron 128 dan 64, ditambahkan regularisasi L2 dengan faktor regulasi sebesar 0.01 untuk mencegah overfitting dengan menambahkan penalti terhadap bobot besar. Menambahkan lapisan output dense dengan 4 unit neuron (kelas target 'price_range') dan fungsi aktivasi softmax. Fungsi aktivasi softmax digunakan untuk klasifikasi multi-kelas, mengubah output menjadi probabilitas kelas.
+Membuat model Seq dari framework Keras dan menambahkan lapisan fitur yang berisikan kolom numerik dan kategorik yang telah distandarisasi sebelumnya. Menambahkan lapisan Dense (Fully Connected) yang terdiri dari 512, 256, 128, dan 64 neuron dengan fungsi aktivasinya relu. Menambahkan lapisan dropout dengan peluang dropout sebesar 50%. Dropout digunakan untuk mencegah overfitting dengan secara acak menonaktifkan setengah dari neuron di lapisan selama pelatihan berlangsung. Pada lapisan Dense dengan neuron 128 dan 64, ditambahkan regularisasi L2 dengan faktor regulasi sebesar 0.01 untuk mencegah overfitting dengan menambahkan penalti terhadap bobot besar. Menambahkan lapisan output dense dengan 4 unit neuron (kelas target 'price_range') dan fungsi aktivasi softmax. Fungsi aktivasi softmax digunakan untuk klasifikasi multi-kelas, mengubah output menjadi peluang kelas.
 ```
 # Kompilasi Model
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 ```
-Mengompilasi model dengan menentukan optimizer, fungsi loss, dan metrik evaluasi. Menggunakan optimizer Adam dengan laju pembelajaran sebesar 0.001. Menggunakan fungsi loss sparse_categorical_crossentropy, yang cocok untuk klasifikasi multi-kelas dengan target diskrit. Menggunakan metrik evaluasi akurasi selama pelatihan dan evaluasi model.
+Mengompilasi model menggunakan optimizer Adam dengan laju pembelajaran sebesar 0.001. Menggunakan fungsi loss sparse_categorical_crossentropy, yang cocok untuk klasifikasi multi-kelas dengan target diskrit. Menggunakan metrik evaluasi akurasi selama pelatihan dan evaluasi model.
 ```
 # Latih model
 history = model.fit(train_ds, validation_data=test_ds, epochs=20)
@@ -177,13 +183,13 @@ param_grid = {
     'min_child_weight': [1, 3, 5]
 }
 ```
-Membangun model model klasifikasi menggunakan algoritma XGBoost dengan metrik evaluasi yang digunakan adalah mlogloss (multiclass log loss), yang digunakan untuk mengevaluasi performa model klasifikasi multi-kelas. 
+Membangun model model klasifikasi menggunakan algoritma XGBoost dengan metrik evaluasi yang digunakan adalah mlogloss (multiclass log loss), yang digunakan untuk mengevaluasi performa model klasifikasi multi-kelas. Learning rate mengontrol seberapa besar langkah yang diambil model saat mengoptimalkan bobot. Max depth adalah kedalaman maksimum tiap pohon keputusan. Semakin dalam pohon, semakin kompleks model, namun juga lebih rentan terhadap overfitting. n estimator adalah jumlah pohon keputusan yang akan digunakan dalam model. Semakin banyak pohon, semakin baik performa model, hingga titik tertentu. Subsampel adalah proporsi sampel yang digunakan untuk melatih setiap pohon. Menggunakan subset data dapat membantu mengurangi overfitting. Min child weight adalah jumlah minimum sampel yang diperlukan dalam satu leaf node. Nilai yang lebih tinggi dapat membuat model lebih konservatif.
 ```
 # GridSearchCV untuk menemukan parameter optimal
 grid_search = GridSearchCV(model_xgb, param_grid, cv=5, n_jobs=-1, verbose=2)
 grid_search.fit(X_train, y_train)
 ```
-Mendefinisikan grid parameter yang akan digunakan untuk mencari kombinasi parameter terbaik menggunakan teknik GridSearchCV. Learning rate mengontrol seberapa besar langkah yang diambil model saat mengoptimalkan bobot. Max depth adalah kedalaman maksimum tiap pohon keputusan. Semakin dalam pohon, semakin kompleks model, namun juga lebih rentan terhadap overfitting. n estimator adalah jumlah pohon keputusan yang akan digunakan dalam model. Semakin banyak pohon, semakin baik performa model, hingga titik tertentu. Subsampel adalah proporsi sampel yang digunakan untuk melatih setiap pohon. Menggunakan subset data dapat membantu mengurangi overfitting. Min child weight adalah jumlah minimum sampel yang diperlukan dalam satu leaf node. Nilai yang lebih tinggi dapat membuat model lebih konservatif.
+Mendefinisikan grid parameter yang akan digunakan untuk mencari kombinasi parameter terbaik menggunakan teknik GridSearchCV. Banyaknya lipatan (fold) yang ditetapkan sebanyak 5 untuk mempercepat proses komputasi. Menghitung performa model untuk setiap kombinasi parameter berdasarkan cross-validation. Kombinasi parameter yang optimal akan dipilih untuk pemodelan XGBOOST.
 ```
 # Kombinasi parameter optimal
 best_xgb = grid_search.best_estimator_
@@ -191,11 +197,11 @@ best_xgb = grid_search.best_estimator_
 # Menampilkan parameter optimal
 print('Kombinasi parameter optimal:', grid_search.best_params_)
 ```
-Mendapatkan model dengan parameter terbaik dari hasil pencarian grid. Dalam hal ini, kombinasi parameter optimal adalah 'learning_rate': 0.1, 'max_depth': 5, 'min_child_weight': 3, 'n_estimator': 100, 'subsample': 0.6
+Mendapatkan model dengan parameter terbaik dari hasil pencarian grid. Dalam hal ini, kombinasi parameter optimal adalah 'learning_rate': 0.1, 'max_depth': 5, 'min_child_weight': 3, 'n_estimator': 100, 'subsample': 0.6.
 
 ## Model Evaluation ##
 ### NEURAL NETWORK ###
-Menampilkan akurasi dari proses pelatihan model NN.
+#### Menampilkan akurasi dari proses pelatihan model NN ####
 ```
 # Menghitung metrik evaluasi: akurasi, presisi, recall, dan F1 score
 accuracy_nn = accuracy_score(y_test, y_pred_nn)
@@ -215,7 +221,35 @@ Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, 
 - Recall : 95,25%. Model NN mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 95,25%.
 - F1-score : 95,23%. Model NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 95,23%.
 
-Kurva ROC
+#### Menampilkan Confussion Matriks ####
+```
+# Confusion Matrix
+cm_nn = confusion_matrix(y_test, y_pred_nn)
+print("Confusion Matrix NN:")
+print(cm_nn)
+```
+Kelas 0 (Low Cost):
+- Sebanyak 103 sampel diklasifikasikan dengan benar sebagai kelas 0
+- Sebanyak 2 sampel kelas 0, diklasifikasikan sebagai kelas 1
+- Tidak ada sampel pada kelas 0 yang diklasifikasikan sebagai kelas 2 dan kelas 3
+
+Kelas 1 (Medium Cost):
+- Sebanyak 4 sampel kelas 1, diklasifikasikan sebagai kelas 0
+- Sebanyak 87 sampel diklasifikasikan dengan benar sebagai kelas 1
+- Tidak ada sampel pada kelas 1 yang diklasifikasikan sebagai kelas 2 dan kelas 3
+
+Kelas 2 (High Cost):
+- Tidak ada sampel pada kelas 2 yang diklasifikasikan sebagai kelas 0
+- Sebanyak 7 sampel kelas 2, diklasifikasikan sebagai kelas 1
+- Sebanyak 82 sampel diklasifikasikan dengan benar sebagai kelas 2
+- Sebanyak 3 sampel kelas 2, diklasifikasikan sebagai kelas 3
+
+Kelas 3 (Very High Cost):
+- Tidak ada sampel pada kelas 3 yang diklasifikasikan sebagai kelas 0 dan kelas 1
+- Sebanyak 3 sampel kelas 2, diklasifikasikan sebagai kelas 3
+- Sebanyak 109 sampel diklasifikasikan dengan benar sebagai kelas 3
+
+#### Kurva ROC ####
 
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/01c96e9d-5a80-4ff3-bce5-e6a7cd6c6d6d)
 
@@ -245,8 +279,105 @@ Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, 
 - Recall : 92%. Model XGBOOST mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 92%.
 - F1-score : 92%. Model XGBOOST mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 92%.
 
-Kurva ROC
+#### Menampilkan Confussion Matriks ####
+```
+# Confusion Matrix
+cm_xgb = confusion_matrix(y_test, y_pred_xgb)
+print("Confusion Matrix XGBOOST:")
+print(cm_xgb)
+```
+Kelas 0 (Low Cost):
+- Sebanyak 101 sampel diklasifikasikan dengan benar sebagai kelas 0
+- Sebanyak 4 sampel kelas 0, diklasifikasikan sebagai kelas 1
+- Tidak ada sampel pada kelas 0 yang diklasifikasikan sebagai kelas 2 dan kelas 3
+
+Kelas 1 (Medium Cost):
+- Sebanyak 3 sampel kelas 1, diklasifikasikan sebagai kelas 0
+- Sebanyak 86 sampel diklasifikasikan dengan benar sebagai kelas 1
+- Sebanyak 2 sampel kelas 1, diklasifikasikan sebagai kelas 2
+- Tidak ada sampel pada kelas 1 yang diklasifikasikan sebagai kelas 3
+
+Kelas 2 (High Cost):
+- Tidak ada sampel pada kelas 2 yang diklasifikasikan sebagai kelas 0
+- Sebanyak 5 sampel kelas 2, diklasifikasikan sebagai kelas 1
+- Sebanyak 80 sampel diklasifikasikan dengan benar sebagai kelas 2
+- Sebanyak 7 sampel kelas 2, diklasifikasikan sebagai kelas 3
+
+Kelas 3 (Very High Cost):
+- Tidak ada sampel pada kelas 3 yang diklasifikasikan sebagai kelas 0 dan kelas 1
+- Sebanyak 11 sampel kelas 2, diklasifikasikan sebagai kelas 3
+- Sebanyak 101 sampel diklasifikasikan dengan benar sebagai kelas 3
+
+#### Kurva ROC ####
 
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/3cf3467f-00d9-4a59-8625-c0197ac7ea50)
 
 Model XGBoost juga menunjukkan kinerja yang sangat baik dengan nilai AUC yang tinggi, meskipun sedikit lebih rendah dibandingkan dengan model NN untuk kelas 2.
+
+## PREDICTION ##
+### Membaca Data Testing ###
+```
+data_testing = pd.read_csv("test.csv")
+```
+### Data Preprocessing ###
+#### Standarisasi Data ####
+```
+## Standarisasi data (mean = 0 dan st.dev = 1) ##
+# Mendefinisikan fungsi scale data
+def scale_data(data_testing):
+    # Membuat salinan data
+    scaled_data_testing = data_testing.copy()
+    # Fitur numerik yang diskalakan
+    fitur_numerik = ['battery_power', 'clock_speed', 'fc', 'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width', 'ram', 'sc_h', 'talk_time']
+    # Melakukan standarisasi
+    scaler = StandardScaler()
+    # Mengubah skala nilai
+    scaled_data_testing[fitur_numerik] = scaler.fit_transform(scaled_data_testing[fitur_numerik])
+    return scaled_data_testing
+# Menampilkan data hasil standarisasi
+scaled_data_testing = scale_data(data_testing)
+print(scaled_data_testing)
+```
+Melakukan standarisasi data numerik pada data testing agar memiliki satuan yang sama 
+### NEURAL NETWORK ###
+#### Konversi Dataframe ke Dataset TensorFlow ####
+```
+# Mengonversi dataframe ke dataset TensorFlow
+def data_to_dataset(dataframe, batch_size=32):
+    dataframe = dataframe.copy()
+    ds = tf.data.Dataset.from_tensor_slices(dict(dataframe))
+    ds = ds.batch(batch_size)
+    return ds
+
+test_ds = data_to_dataset(scaled_data_testing)
+```
+#### Melakukan Prediksi ####
+```
+# Prediksi menggunakan model NN
+y_pred_probs_nn = model.predict(test_ds)
+y_pred_nn = tf.argmax(y_pred_probs_nn, axis=1).numpy()
+
+# Menampilkan prediksi
+print("Prediksi NN:")
+print(y_pred_nn)
+```
+### XGBOOST ###
+#### Kolom yang digunakan ####
+```
+data_predict = scaled_data_testing[['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g', 'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width', 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']]
+
+data_predict.head()
+```
+Data yang digunakan adalah data yang telah distandarisasi sebelumnya
+#### Melakukan Prediksi ####
+```
+# Prediksi menggunakan model XGBoost
+y_pred_xgb = best_xgb.predict(data_predict)
+
+# Menampilkan prediksi
+print("Prediksi XGBoost:")
+print(y_pred_xgb)
+```
+
+## KESIMPULAN ##
+Berdasarkan hasil evaluasi model di atas, model Neural Network (NN) menunjukkan kinerja yang sangat baik dengan akurasi keseluruhan 95%. Nilai precision, recall, dan f1-score untuk setiap kelas juga tinggi, menunjukkan bahwa model memiliki kinerja yang baik dalam mengklasifikasikan sampel ke dalam kelas yang benar. Oleh sebab itu, model NN layak digunakan untuk melakukan prediksi pada data baru. 
