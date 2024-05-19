@@ -198,7 +198,7 @@ best_xgb = grid_search.best_estimator_
 # Menampilkan parameter optimal
 print('Kombinasi parameter optimal:', grid_search.best_params_)
 ```
-Mendapatkan model dengan parameter terbaik dari hasil pencarian grid. Dalam hal ini, kombinasi parameter optimal adalah 'learning_rate': 0.1, 'max_depth': 5, 'min_child_weight': 3, 'n_estimator': 100, 'subsample': 0.6.
+Mendapatkan model dengan parameter terbaik dari hasil pencarian grid. Dalam hal ini, kombinasi parameter optimal adalah {'learning_rate': 0.1, 'max_depth': 5, 'min_child_weight': 3, 'n_estimator': 100, 'subsample': 0.6}
 
 ## Model Evaluation ##
 ### NEURAL NETWORK ###
@@ -217,10 +217,10 @@ print("F1 Score:", f1_nn)
 ```
 Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, Recall, dan F1-Score.
 
-- Akurasi : 95,25%. Model NN mampu membuat prediksi yang benar (kelas positif dan kelas negatif) dari total prediksi yang dilakukan, yaitu sebesar 95,25%. Semakin besar akurasi, maka semakin baik model yang digunakan untuk melakukan tugas klasifikasi.
-- Presisi : 95,32%. Model NN mampu membuat prediksi yang benar bagi kelas positif dari total prediksi positif yang dilakukan, yaitu sebesar 95,32%. Semakin besar presisi, maka semakin baik model mengidentifikasi kelas positif tanpa salah mengidentifikasi kelas negatif sebagai kelas positif.
-- Recall : 95,25%. Model NN mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 95,25%.
-- F1-score : 95,23%. Model NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 95,23%.
+- Akurasi : 93,5%. Model NN mampu membuat prediksi yang benar (kelas positif dan kelas negatif) dari total prediksi yang dilakukan, yaitu sebesar 93,5%. Semakin besar akurasi, maka semakin baik model yang digunakan untuk melakukan tugas klasifikasi.
+- Presisi : 93,53%. Model NN mampu membuat prediksi yang benar bagi kelas positif dari total prediksi positif yang dilakukan, yaitu sebesar 93,53%. Semakin besar presisi, maka semakin baik model mengidentifikasi kelas positif tanpa salah mengidentifikasi kelas negatif sebagai kelas positif.
+- Recall : 93,5%. Model NN mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 93,5%.
+- F1-score : 93,47%. Model NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 93,47%.
 
 #### Menampilkan Confussion Matriks ####
 ```
@@ -230,25 +230,25 @@ print("Confusion Matrix NN:")
 print(cm_nn)
 ```
 Kelas 0 (Low Cost):
-- Sebanyak 103 sampel diklasifikasikan dengan benar sebagai kelas 0
-- Sebanyak 2 sampel kelas 0, diklasifikasikan sebagai kelas 1
-- Tidak ada sampel pada kelas 0 yang diklasifikasikan sebagai kelas 2 dan kelas 3
+- Sebanyak 105 sampel diklasifikasikan dengan benar sebagai kelas 0
+- Tidak ada sampel pada kelas 0 yang diklasifikasikan sebagai kelas 1, kelas 2 dan kelas 3
 
 Kelas 1 (Medium Cost):
-- Sebanyak 4 sampel kelas 1, diklasifikasikan sebagai kelas 0
-- Sebanyak 87 sampel diklasifikasikan dengan benar sebagai kelas 1
-- Tidak ada sampel pada kelas 1 yang diklasifikasikan sebagai kelas 2 dan kelas 3
+- Sebanyak 6 sampel kelas 1, diklasifikasikan sebagai kelas 0
+- Sebanyak 81 sampel diklasifikasikan dengan benar sebagai kelas 1
+- Sebanyak 4 sampel kelas 1, diklasifikasikan sebagai kelas 2
+- Tidak ada sampel pada kelas 1 yang diklasifikasikan sebagai kelas 3
 
 Kelas 2 (High Cost):
 - Tidak ada sampel pada kelas 2 yang diklasifikasikan sebagai kelas 0
-- Sebanyak 7 sampel kelas 2, diklasifikasikan sebagai kelas 1
-- Sebanyak 82 sampel diklasifikasikan dengan benar sebagai kelas 2
-- Sebanyak 3 sampel kelas 2, diklasifikasikan sebagai kelas 3
+- Sebanyak 5 sampel kelas 2, diklasifikasikan sebagai kelas 1
+- Sebanyak 83 sampel diklasifikasikan dengan benar sebagai kelas 2
+- Sebanyak 4 sampel kelas 2, diklasifikasikan sebagai kelas 3
 
 Kelas 3 (Very High Cost):
 - Tidak ada sampel pada kelas 3 yang diklasifikasikan sebagai kelas 0 dan kelas 1
-- Sebanyak 3 sampel kelas 2, diklasifikasikan sebagai kelas 3
-- Sebanyak 109 sampel diklasifikasikan dengan benar sebagai kelas 3
+- Sebanyak 7 sampel kelas 2, diklasifikasikan sebagai kelas 3
+- Sebanyak 105 sampel diklasifikasikan dengan benar sebagai kelas 3
 
 #### Kurva ROC ####
 
@@ -381,4 +381,4 @@ print(y_pred_xgb)
 ```
 
 ## KESIMPULAN ##
-Berdasarkan hasil evaluasi model di atas, model Neural Network (NN) menunjukkan kinerja yang sangat baik dengan akurasi keseluruhan 95%. Nilai precision, recall, dan f1-score untuk setiap kelas juga tinggi, menunjukkan bahwa model memiliki kinerja yang baik dalam mengklasifikasikan sampel ke dalam kelas yang benar. Oleh sebab itu, model NN layak digunakan untuk melakukan prediksi pada data baru. 
+Berdasarkan hasil evaluasi model di atas, model Neural Network (NN) menunjukkan kinerja yang sangat baik dengan akurasi keseluruhan 93,5%. Nilai precision, recall, dan f1-score untuk setiap kelas juga tinggi, menunjukkan bahwa model memiliki kinerja yang baik dalam mengklasifikasikan sampel ke dalam kelas yang benar. Oleh sebab itu, model NN layak digunakan untuk melakukan prediksi pada data baru. 
