@@ -127,10 +127,10 @@ print(f"y_test : {y_test.shape}")
 ```
 Data dipartisi menjadi data training dan data testing secara random. Data training sebanyak 80% dari data keseluruhan, sedangkan data testing sebanyak 20% dari data keseluruhan.
 
-X_train menunjukkan fitur-fitur yang digunakan untuk melatih model (1600 baris dan 20 kolom).
-X_test menunjukkan fitur-fitur yang digunakan untuk menguji model (400 baris dan 20 kolom).
-y_train menunjukkan target yang digunakan untuk melatih model (1600 baris).
-y_test menunjukkan target yang digunakan untuk menguji model (20 kolom).
+- X_train menunjukkan fitur-fitur yang digunakan untuk melatih model (1600 baris dan 20 kolom).
+- X_test menunjukkan fitur-fitur yang digunakan untuk menguji model (400 baris dan 20 kolom).
+- y_train menunjukkan target yang digunakan untuk melatih model (1600 baris).
+- y_test menunjukkan target yang digunakan untuk menguji model (20 kolom).
 Keempat komponen tersebut harus ada sebelum melakukan pemodelan.
 
 ## MODELLING ##
@@ -187,13 +187,11 @@ Mendefinisikan grid parameter yang akan digunakan untuk mencari kombinasi parame
 ```
 # Kombinasi parameter optimal
 best_xgb = grid_search.best_estimator_
-```
-Mendapatkan model dengan parameter terbaik dari hasil pencarian grid.
-```
+
 # Menampilkan parameter optimal
 print('Kombinasi parameter optimal:', grid_search.best_params_)
 ```
-Menampilkan kombinasi parameter terbaik.
+Mendapatkan model dengan parameter terbaik dari hasil pencarian grid. Dalam hal ini, kombinasi parameter optimal adalah 'learning_rate': 0.1, 'max_depth': 5, 'min_child_weight': 3, 'n_estimator': 100, 'subsample': 0.6
 
 ## Model Evaluation ##
 ### NEURAL NETWORK ###
@@ -221,4 +219,6 @@ Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, 
 - Recall : 95,25%. Model NN mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 95,25%.
 - F1-score : 95,23%. Model NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 95,23%.
 
+Kurva ROC
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/01c96e9d-5a80-4ff3-bce5-e6a7cd6c6d6d)
 
