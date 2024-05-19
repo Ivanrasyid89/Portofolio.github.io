@@ -195,10 +195,6 @@ Mendapatkan model dengan parameter terbaik dari hasil pencarian grid. Dalam hal 
 
 ## Model Evaluation ##
 ### NEURAL NETWORK ###
-```
-accuracy = model.evaluate(test_ds)
-print(f'Accuracy: {accuracy}')
-```
 Menampilkan akurasi dari proses pelatihan model NN.
 ```
 # Menghitung metrik evaluasi: akurasi, presisi, recall, dan F1 score
@@ -220,5 +216,37 @@ Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, 
 - F1-score : 95,23%. Model NN mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 95,23%.
 
 Kurva ROC
+
 ![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/01c96e9d-5a80-4ff3-bce5-e6a7cd6c6d6d)
 
+Model Neural Network (NN) menunjukkan kinerja yang sangat baik dengan nilai AUC yang sangat tinggi untuk semua kelas (mendekati atau sama dengan 1.00).
+
+### XGBOOST ###
+Menampilkan akurasi dari proses pelatihan model XGBOOST.
+```
+## Mengevaluasi model XGBOOST ##
+# Menguji model menggunakan data uji (X_test)
+y_pred_xgb = best_xgb.predict(X_test)
+# Menghitung metrik evaluasi: akurasi, presisi, recall, dan F1 score
+accuracy = accuracy_score(y_test, y_pred_xgb)
+precision = precision_score(y_test, y_pred_xgb, average='weighted')
+recall = recall_score(y_test, y_pred_xgb, average='weighted')
+f1 = f1_score(y_test, y_pred_xgb, average='weighted')
+# Menampilkan metrik evaluasi
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1 Score:", f1)
+```
+Metrik evaluasi yang digunakan untuk tugas klasifikasi adalah Akurasi, Presisi, Recall, dan F1-Score.
+
+- Akurasi : 92%. Model XGBOOST mampu membuat prediksi yang benar (kelas positif dan kelas negatif) dari total prediksi yang dilakukan, yaitu sebesar 92%. Semakin besar akurasi, maka semakin baik model yang digunakan untuk melakukan tugas klasifikasi.
+- Presisi : 92,05%. Model XGBOOST mampu membuat prediksi yang benar bagi kelas positif dari total prediksi positif yang dilakukan, yaitu sebesar 92,05%. Semakin besar presisi, maka semakin baik model mengidentifikasi kelas positif tanpa salah mengidentifikasi kelas negatif sebagai kelas positif.
+- Recall : 92%. Model XGBOOST mampu membuat prediksi yang benar bagi kelas positif, yaitu sebesar 92%.
+- F1-score : 92%. Model XGBOOST mampu mengklasifikasi kelas positif dan negatif dengan benar (seimbang), yaitu sebesar 92%.
+
+Kurva ROC
+
+![image](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/3cf3467f-00d9-4a59-8625-c0197ac7ea50)
+
+Model XGBoost juga menunjukkan kinerja yang sangat baik dengan nilai AUC yang tinggi, meskipun sedikit lebih rendah dibandingkan dengan model NN untuk kelas 2.
