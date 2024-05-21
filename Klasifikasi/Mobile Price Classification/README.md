@@ -381,4 +381,4 @@ print(y_pred_xgb)
 ```
 
 ## KESIMPULAN ##
-Berdasarkan hasil evaluasi model di atas, model Neural Network (NN) menunjukkan kinerja yang sangat baik dengan akurasi keseluruhan 93,5%. Nilai precision, recall, dan f1-score untuk setiap kelas juga tinggi, menunjukkan bahwa model memiliki kinerja yang baik dalam mengklasifikasikan sampel ke dalam kelas yang benar. Oleh sebab itu, model NN layak digunakan untuk melakukan prediksi pada data baru. 
+Berdasarkan hasil evaluasi model di atas, model Neural Network (NN) menunjukkan kinerja yang sangat baik dengan akurasi keseluruhan 93,5%. Nilai precision, recall, dan f1-score untuk setiap kelas juga tinggi, menunjukkan bahwa model memiliki kinerja yang baik dalam mengklasifikasikan sampel ke dalam kelas yang benar. Oleh sebab itu, model NN lebih cocok digunakan untuk melakukan prediksi pada data baru. 
