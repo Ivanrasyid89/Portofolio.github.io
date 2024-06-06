@@ -57,7 +57,7 @@ def scale_data(data_train):
 scaled_data_train = scale_data(data_train)
 print(scaled_data_train)
 ```
-Melakukan standarisasi data agar setiap fitur memiliki satuan yang sama.
+Melakukan standarisasi data agar setiap fitur memiliki satuan yang sama. Data yang distandarisasi adalah fitur-fitur numerik.
 ### Feature Engineering ###
 #### Feature Engineering dan Konversi Data ####
 ```
@@ -98,7 +98,7 @@ def data_to_dataset(dataframe, shuffle=True, batch_size=32):
 
   return ds
 ```
-Sebelum melakukan pemodelan NN, data dikonversi terlebih dahulu ke dataset TensorFlow agar bisa dilakukan pembentukan arsitektur NN.
+Sebelum melakukan pemodelan Neural Network, data numerik dan kategorik dikonversi terlebih dahulu ke dataset TensorFlow agar bisa dilakukan pembentukan arsitektur Neural Network.
 ### Split Data ###
 #### Partisi Data model NN ####
 ```
@@ -120,7 +120,7 @@ X = scale_data(data_train.drop('price_range', axis=1))
 # Target Y
 y = scaled_data_train['price_range']
 ```
-Sebelum melakukan analisis, data dipecah terlebih dahulu menjadi dua bagian, yaitu fitur (X) dan target (Y).
+Sebelum melakukan pemodelan XGBoost, data dipecah terlebih dahulu menjadi dua bagian, yaitu fitur (X) dan target (Y).
 ```
 ## Partisi data ##
 # Partisi data ke dalam data latih (80%) dan data uji (20%)
@@ -138,7 +138,7 @@ Data dipartisi menjadi data training dan data testing secara random. Data traini
 - y_train menunjukkan target yang digunakan untuk melatih model (1600 baris).
 - y_test menunjukkan target yang digunakan untuk menguji model (20 kolom).
 
-Keempat komponen tersebut harus ada sebelum melakukan pemodelan.
+Keempat komponen tersebut harus ada sebelum melakukan pemodelan. Keempat komponen tersebut akan digunakan untuk melakukan pemodelan XGBoost.
 
 ## MODELLING ##
 ### NEURAL NETWORK ###
