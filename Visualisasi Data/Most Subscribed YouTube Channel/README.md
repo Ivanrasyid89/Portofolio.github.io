@@ -50,5 +50,5 @@ data.to_csv('Most Subscribed YouTube Channel.csv', index=False)
 ```
 
 # Dashboard with Power BI #
-![Most Subscribed YouTube Channel_page-0001 (2)](https://github.com/Ivanrasyid89/Portofolio.github.io/assets/98071016/c5d60dd8-f3c0-44cd-91e1-9668e72c0993)
+![Uploading Most Subscribed YouTube Channel_page-0001 (3).jpg…]()
 
