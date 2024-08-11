@@ -1,11 +1,11 @@
-# Bike Store
+# Bike Store 
 ## Overview
 This project focuses on analyzing various aspects of the Bike Store's sales data, customer behavior, and staff/store performance.  Data can be accessed on the page address:
 
 https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database
 
 ## Entity Relationship Diagram
-![ERD_page-0001](https://github.com/user-attachments/assets/e06693d6-fff5-479c-aede-31ac4ec96d27)
+![ERD](https://github.com/user-attachments/assets/dcba8127-2648-4c31-8cee-c1244f68ee42)
 
 ## Formulating Business Questions
 ### Sales and Revenue Analysis:
