@@ -1,0 +1,299 @@
+CREATE DATABASE bike_store;
+USE bike_store;
+
+/* DATA PREPROCESSING */
+-- DEFINING PRIMARY KEYS
+ALTER TABLE brands ADD CONSTRAINT pk_brands PRIMARY KEY (brand_id);
+ALTER TABLE categories ADD CONSTRAINT pk_categories PRIMARY KEY (category_id);
+ALTER TABLE customers ADD CONSTRAINT pk_customers PRIMARY KEY (customer_id);
+ALTER TABLE products ADD CONSTRAINT pk_products PRIMARY KEY (product_id);
+ALTER TABLE orders ADD CONSTRAINT pk_orders PRIMARY KEY (order_id);
+ALTER TABLE order_items ADD CONSTRAINT pk_order_items PRIMARY KEY (order_id, item_id);
+ALTER TABLE staffs ADD CONSTRAINT pk_staffs PRIMARY KEY (staff_id);
+ALTER TABLE stocks ADD CONSTRAINT pk_stocks PRIMARY KEY (store_id, product_id);
+ALTER TABLE stores ADD CONSTRAINT pk_stores_store_id PRIMARY KEY (store_id);
+
+-- DEFINING FOREIGN KEYS
+ALTER TABLE products 
+ADD CONSTRAINT fk_products FOREIGN KEY (brand_id) REFERENCES brands(brand_id);
+
+ALTER TABLE orders 
+ADD CONSTRAINT fk_order_items_customer_id FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+ADD CONSTRAINT fk_order_items_store_id FOREIGN KEY (store_id) REFERENCES stores(store_id),
+ADD CONSTRAINT fk_order_items_staff_id FOREIGN KEY (staff_id) REFERENCES staffs(staff_id);
+
+ALTER TABLE order_items
+ADD CONSTRAINT fk_order_items_order_id FOREIGN KEY (order_id) REFERENCES orders(order_id),
+ADD CONSTRAINT fk_order_items_product_id FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+ALTER TABLE staffs
+MODIFY manager_id INT;
+
+ALTER TABLE staffs
+ADD CONSTRAINT fk_staffs_store_id FOREIGN KEY (store_id) REFERENCES stores(store_id),
+ADD CONSTRAINT fk_staffs_manager_id FOREIGN KEY (manager_id) REFERENCES staffs(staff_id);
+
+ALTER TABLE stocks
+ADD CONSTRAINT fk_stocks_store_id FOREIGN KEY (store_id) REFERENCES stores(store_id),
+ADD CONSTRAINT fk_stocks_product_id FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+-- MODIFYING COLUMN
+ALTER TABLE staffs MODIFY manager_id INT;
+
+
+/* Formulating Business Questions */
+-- What are the top 10 products by sales volume?
+SELECT 
+	p.product_name, 
+    SUM(oi.quantity) AS total_quantity_sold
+FROM 
+	order_items oi
+JOIN 
+	products p ON oi.product_id = p.product_id
+GROUP BY 
+	p.product_name
+ORDER BY 
+	total_quantity_sold DESC
+LIMIT 10;
+
+-- Which brands contribute the most to overall sales revenue?
+SELECT
+	b.brand_name,
+    SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+FROM
+	order_items oi
+JOIN
+	products p ON oi.product_id = p.product_id
+JOIN
+	brands b ON p.brand_id = b.brand_id
+GROUP BY
+	b.brand_name
+ORDER BY
+	total_sales DESC;
+
+-- What are the sales trends over different periods (daily sales trend)?
+SELECT
+	DATE(o.order_date) AS sales_date,
+	SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+FROM 
+	orders o
+JOIN 
+	order_items oi ON o.order_id = oi.order_id
+GROUP BY 
+	sales_date
+ORDER BY 
+	sales_date;
+
+-- What are the sales trends over different periods (monthly sales trend)?
+SELECT 
+	EXTRACT(YEAR FROM o.order_date) AS sales_year,
+	EXTRACT(MONTH FROM o.order_date) AS sales_month,
+	SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+FROM 
+	orders o
+JOIN 
+	order_items oi ON o.order_id = oi.order_id
+GROUP BY 
+	sales_year, sales_month
+ORDER BY 
+	sales_year, sales_month;
+
+-- Which bike categories are the most popular based on sales volume?
+SELECT
+	c.category_name,
+    SUM(oi.quantity) AS total_quantity_sold
+FROM
+	order_items oi
+JOIN
+	products p ON oi.product_id = p.product_id
+JOIN
+	categories c ON p.category_id = c.category_id
+GROUP BY 
+	c.category_name
+ORDER BY 
+	total_quantity_sold DESC;
+
+-- What is the geographic distribution of customers? Which cities have the most customers?
+SELECT
+    c.city, 
+    COUNT(c.customer_id) AS number_of_customers
+FROM
+    customers c
+GROUP BY
+    c.city
+ORDER BY
+    number_of_customers DESC;
+
+-- Which products have a price higher than the average product price?
+SELECT
+	product_name,
+    list_price
+FROM
+	products
+WHERE
+	list_price > (SELECT AVG(list_price) FROM products);
+
+-- What is the average sales revenue per product category?
+WITH
+	AvgCategorySales AS (
+		SELECT
+			p.category_id,
+            AVG(oi.quantity * oi.list_price * (1 - oi.discount)) AS avg_sales
+		FROM 
+			products p
+		INNER JOIN
+			order_items oi ON p.product_id = oi.product_id
+		GROUP BY
+			p.category_id)
+SELECT
+	c.category_id,
+	c.category_name, 
+    a.avg_sales
+FROM 
+    AvgCategorySales a
+JOIN 
+    categories c ON a.category_id = c.category_id;
+
+-- How can customers be segmented based on their purchase quantities and total sales?
+WITH
+	CustomerSales AS (
+		SELECT
+			o.order_id,
+            c.customer_id,
+            c.first_name,
+            c.last_name,
+            oi.quantity,
+            SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+		FROM
+			customers c
+		JOIN
+			orders o ON c.customer_id = o.customer_id
+		JOIN
+			order_items oi ON o.order_id = oi.order_id
+		GROUP BY
+			1, 2
+)
+SELECT
+	order_id,
+    customer_id,
+    quantity,
+    total_sales,
+    CASE
+		WHEN quantity = 1 AND total_sales < 1000 THEN 'VERY LOW'
+        WHEN quantity = 1 AND total_sales BETWEEN 1000 AND 2000 THEN 'LOW'
+        WHEN quantity = 1 AND total_sales BETWEEN 2001 AND 5000 THEN 'MEDIUM'
+        WHEN quantity = 2 AND total_sales BETWEEN 5001 AND 10000 THEN 'HIGH'
+        WHEN quantity = 2 AND total_sales > 10000 THEN 'VERY HIGH'
+        ELSE 'OTHERS'
+	END AS customer_category 
+FROM CustomerSales;
+
+-- Which customers have contributed the most to sales in terms of revenue?
+WITH
+	CustomerSales AS (
+		SELECT
+			c.customer_id,
+            c.first_name,
+            c.last_name,
+            c.city,
+            SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+		FROM
+			customers c
+		JOIN
+			orders o ON c.customer_id = o.customer_id
+		JOIN
+			order_items oi ON o.order_id = oi.order_id
+		GROUP BY
+			1, 2, 3, 4
+)
+SELECT
+	customer_id,
+    first_name,
+    last_name,
+    city,
+    total_sales,
+    RANK() OVER(ORDER BY total_sales DESC) AS RANKING
+FROM CustomerSales
+LIMIT 10;
+
+-- What products have sales totals that are higher than the average sales across all products?
+WITH
+	AvgSales AS (
+		SELECT
+            AVG(oi.quantity * oi.list_price * (1 - oi.discount)) AS avg_sales
+		FROM 
+			order_items oi
+)
+SELECT
+	p.product_id,
+    p.product_name,
+    SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+FROM
+	products p
+INNER JOIN
+	order_items oi ON p.product_id = oi.product_id
+GROUP BY
+	p.product_id, p.product_name
+HAVING
+	SUM(oi.quantity * oi.list_price * (1 - oi.discount)) > (SELECT avg_sales FROM AvgSales);
+    
+-- Who are the top-performing sales staff in terms of revenue generated?
+SELECT
+    s.staff_id,
+    s.first_name,
+    s.last_name,
+    SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+FROM
+    orders o
+JOIN
+    order_items oi ON o.order_id = oi.order_id
+JOIN
+    staffs s ON o.staff_id = s.staff_id
+WHERE
+    o.order_date BETWEEN '2018-01-01' AND '2018-12-31'  
+GROUP BY
+    s.staff_id, s.first_name, s.last_name
+ORDER BY
+    total_sales DESC;
+
+-- Which store generates the highest sales, and how does each staff member contribute to the store's success?
+WITH TopStore AS (
+    SELECT
+        st.store_id,
+        st.store_name,
+        SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS total_sales
+    FROM
+        orders o
+    JOIN
+        order_items oi ON o.order_id = oi.order_id
+    JOIN
+        stores st ON o.store_id = st.store_id
+    WHERE
+        o.order_date BETWEEN '2018-01-01' AND '2018-12-31'
+    GROUP BY
+        st.store_id, st.store_name
+    ORDER BY
+        total_sales DESC
+)
+SELECT
+    s.staff_id,
+    s.first_name,
+    s.last_name,
+    st.store_name,
+    SUM(oi.quantity * oi.list_price * (1 - oi.discount)) AS staff_sales
+FROM
+    orders o
+JOIN
+    order_items oi ON o.order_id = oi.order_id
+JOIN
+    staffs s ON o.staff_id = s.staff_id
+JOIN
+    TopStore ts ON o.store_id = ts.store_id
+JOIN
+    stores st ON ts.store_id = st.store_id
+WHERE
+    o.order_date BETWEEN '2018-01-01' AND '2018-12-31'
+GROUP BY
+    s.staff_id, s.first_name, s.last_name, st.store_name
+ORDER BY
+    staff_sales DESC;
