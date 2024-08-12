@@ -5,7 +5,7 @@ This project focuses on analyzing various aspects of the Bike Store's sales data
 https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database
 
 ## Entity Relationship Diagram
-![ERD](https://github.com/user-attachments/assets/dcba8127-2648-4c31-8cee-c1244f68ee42)
+![ERD](https://github.com/user-attachments/assets/8967078e-3d3d-43b9-9372-d7211c7294c8)
 
 ## Formulating Business Questions
 ### Sales and Revenue Analysis:
