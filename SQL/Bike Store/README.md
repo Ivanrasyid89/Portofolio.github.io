@@ -20,3 +20,6 @@ https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database
 ### Staff and Store Performance:
 1. Evaluating which staff members have the highest sales performance.
 2. Comparing sales performance across different stores.
+
+## Dashboard
+![Bike Store Performance Dashboard_page-0001](https://github.com/user-attachments/assets/24cd7e8e-f02a-4e99-8525-cea8b02e5cb9)
