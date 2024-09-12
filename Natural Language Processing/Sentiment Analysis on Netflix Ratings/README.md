@@ -65,11 +65,7 @@ The text processing stage is organized into 6 parts as follows
 - Recall
 - F1-Score
 
-### Confusion Matrix
-### ROC Score
-### Classification Report
-
-## Results
+### Results
 | Model                        | Accuracy | Precision | Recall  | F1-Score | ROC AUC Score |
 |------------------------------|----------|-----------|---------|----------|---------------|
 | Multinomial Logistic Regression | 0.885   | 0.884     | 0.885   | 0.884    | 0.946         |
