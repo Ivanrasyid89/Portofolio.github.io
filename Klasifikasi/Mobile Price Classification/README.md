@@ -12,8 +12,6 @@ https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification
 5. [Feature Engineering](#feature-engineering)
 6. [Modeling](#modeling)
 7. [Model Evaluation](#model-evaluation)
-8. [Results](#results)
-9. [Conclusion](#conclusion)
 
 ## Data
 The dataset contains the specifications of mobile phones along with their price range category. It includes the following columns:
@@ -66,58 +64,8 @@ The dataset contains the specifications of mobile phones along with their price 
 - Precision
 - Recall
 - F1-Score
-### Confusion Matrix
-Confusion Matrix NN:
 
-|   | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|
-| 1 |104| 1 | 0 | 0 |
-| 2 | 5 | 84 | 2 | 0 |
-| 3 | 0 | 3 | 81 | 8 |
-| 4 | 0 | 0 | 3 | 109 |
-
-Confusion Matrix XGBoost:
-
-|   | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|
-| 1 |100| 5 | 0 | 0 |
-| 2 | 6 | 82 | 3 | 0 |
-| 3 | 0 | 7 | 79 | 6 |
-| 4 | 0 | 0 | 10 | 102 |
-
- 
-### ROC Score
-| Model                        | ROC Score |
-|------------------------------|----------|
-| Neural Network | 0.9969   |
-| XGBoost      | 0.9915    |
-
-### Classification Report
-Classification Report Neural Network:
-              precision    recall  f1-score   support
-
-           0       0.95      0.99      0.97       105
-           1       0.95      0.92      0.94        91
-           2       0.94      0.88      0.91        92
-           3       0.93      0.97      0.95       112
-
-    accuracy                           0.94       400
-   macro avg       0.95      0.94      0.94       400
-weighted avg       0.95      0.94      0.94       400
-
-Classification Report XGBOOST:
-              precision    recall  f1-score   support
-
-           0       0.94      0.95      0.95       105
-           1       0.87      0.90      0.89        91
-           2       0.86      0.86      0.86        92
-           3       0.94      0.91      0.93       112
-
-    accuracy                           0.91       400
-   macro avg       0.90      0.91      0.91       400
-weighted avg       0.91      0.91      0.91       400
-
-## Results
+### Results
 | Model                        | Accuracy | Precision | Recall  | F1-Score | ROC AUC Score |
 |------------------------------|----------|-----------|---------|----------|---------------|
 | Neural Network | 0.935   | 0.935     | 0.935   | 0.934    | 0.995         |
