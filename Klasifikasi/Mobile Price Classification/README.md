@@ -67,6 +67,13 @@ The dataset contains the specifications of mobile phones along with their price 
 - Recall
 - F1-Score
 ### Confusion Matrix
+Confusion Matrix NN:
+[[104   1   0   0]
+ [  5  84   2   0]
+ [  0   3  81   8]
+ [  0   0   3 109]]
+
+ 
 ### ROC Score
 ### Classification Report
 
