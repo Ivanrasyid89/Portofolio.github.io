@@ -22,4 +22,5 @@ https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database
 2. Comparing sales performance across different stores.
 
 ## Dashboard
-![Bike Store Performance Dashboard_page-0001](https://github.com/user-attachments/assets/24cd7e8e-f02a-4e99-8525-cea8b02e5cb9)
+![Bike Store Performance Dashboard_page-0001](https://github.com/user-attachments/assets/04be6cbc-3024-4b18-9b05-e333401e43aa)
+![Bike Store Performance Dashboard_page-0002](https://github.com/user-attachments/assets/97e60de4-e4a7-464d-a453-6d12d97c7d66)
