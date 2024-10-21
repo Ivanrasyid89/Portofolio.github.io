@@ -5,7 +5,8 @@ This project analyzes and cleans over 10.000 Netflix user reviews from the Googl
 
 https://www.kaggle.com/datasets/ashishkumarak/netflix-reviews-playstore-daily-updated
 
-The primary goal is to build a sentiment analysis model to classify the reviews as positive, negative, or neutral. The project involves various stages including data processing, text processing, EDA, feature extraction, modeling, and evaluation.
+## Problem Statement
+Netflix, as a leading streaming service, receives millions of user reviews from its global customer base. These reviews offer valuable insights into user satisfaction, product performance, and areas for improvement. However, manually processing such a vast amount of textual data is inefficient and can lead to missed opportunities to address recurring issues or to improve customer experience. Therefore, Netflix needs an automated solution to categorize user feedback into actionable sentiments (positive, negative, neutral), providing a scalable way to understand customer needs and prioritize improvements.
 
 ## Table of Contents
 1. [Overview](#overview)
