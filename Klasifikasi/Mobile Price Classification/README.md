@@ -4,6 +4,9 @@ This project focuses on building a machine-learning model to classify mobile pho
 
 https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification
 
+## Problem Statement
+The smartphone company is highly competitive and pricing strategies play a crucial role in maximizing market share and profitability. Many customers consider price as a significant factor when purchasing a smartphone, and the ability to predict the price range of new models can guide product positioning and marketing strategies. A challenge arises in identifying how a smartphone's technical specifications (e.g., RAM, battery, processor) relate to its price range. By predicting the price range using these specifications, the company can improve targeted strategies for different market segments and offer better-priced products.
+
 ## Table of Content
 1. [Project Overview](#overview)
 2. [Data](#data)
