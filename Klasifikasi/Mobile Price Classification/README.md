@@ -46,9 +46,14 @@ The dataset contains the specifications of mobile phones along with their price 
 - Handled outliers
 
 ## Exploratory Data Analysis
-- Distribution of Features: Visualized the distribution of key features such as battery power, RAM, and internal memory
-- Correlation Matrix: Analyzed the correlation between features to identify multicollinearity
-- Price Range Distribution: Visualized the distribution of the target variable (price range)
+### Distribution of Features
+![image](https://github.com/user-attachments/assets/5641bdd1-2b60-4e70-8a48-eba0e633e383)
+![image](https://github.com/user-attachments/assets/86c54759-310e-4c87-b482-15dd96c65f5a)
+
+### Correlation Matrix
+![image](https://github.com/user-attachments/assets/154bc907-ec48-4a45-8c13-23dc933b4c4e)
+
+Based on the correlation plot, we know that the correlation of each feature can impact for target (price range).
 
 ## Feature Engineering
 - Normalization: Scaled numerical features to have zero mean and unit variance
@@ -58,6 +63,7 @@ The dataset contains the specifications of mobile phones along with their price 
 ### Model
 - Neural Network
 - XGBoost
+
 ### Hyperparameter Tuning
 - Adam Optimizer
 - Grid Search CV
