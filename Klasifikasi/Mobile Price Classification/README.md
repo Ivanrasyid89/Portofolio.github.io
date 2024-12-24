@@ -59,6 +59,7 @@ The dataset contains the specifications of mobile phones along with their price 
 - Neural Network
 - XGBoost
 ### Hyperparameter Tuning
+- Adam Optimizer
 - Grid Search CV
 
 ## Model Evaluation
@@ -71,5 +72,22 @@ The dataset contains the specifications of mobile phones along with their price 
 ### Results
 | Model                        | Accuracy | Precision | Recall  | F1-Score | ROC AUC Score |
 |------------------------------|----------|-----------|---------|----------|---------------|
-| Neural Network | 0.935   | 0.935     | 0.935   | 0.934    | 0.995         |
-| XGBoost      | 0.92    | 0.920     | 0.92   | 0.920    | 0.991         |
+| Neural Network | 0.945   | 0.945     | 0.945   | 0.944    | 0.996         |
+| XGBoost      | 0.907    | 0.908     | 0.907   | 0.907    | 0.991         |
+
+- Based on the comparison of the two accuracies of the Neural Network and XGBoost models. Neural Network accuracy is higher than XGBoost. This indicates that this model can overcome the complexity of the data.
+- Pricing new product: When a company is about to launch a new product, this model can predict the price range based on its features. This will certainly help the company in making the right decision regarding the smartphone product it will launch.
+- Market Segmentation:  In the product launch process, companies are required to focus on the most dominant features like “battery_power, px_height, px_width, and ram” in designing their products for different customers. In this case, the company should also consider the target customers such as the lower class, middle class, and upper class.
+
+## Business Impact
+### Optimized Pricing Strategy
+- Companies can price at the upper end of the price range to maximize profits on high-end smartphones that have advanced features.
+- Mid-class and low-class phones can be attractively priced based on corresponding features to target price-sensitive consumers.
+
+### Product Development
+- Companies can improve key features like “battery_power, px_height, px_width, and ram” on high-end phones to maximize profits.
+- On low-class and mid-class phones, companies can increase “battery_power or ram” to differentiate themselves from high-end phones.
+- Understanding the most dominant features will help avoid over-engineering the product to be launched, allowing the company to compete while ensuring production cost efficiency.
+
+## Conclusion
+The Neural Network model can be applied to predict the price range of mobile phones with an accuracy of 94.50% because its performance is excellent. The identification of dominant features can be used as a guideline in product development and costing strategies. By understanding the important features, companies can make data-driven decisions for product optimization, customer segmentation, and increasing profits.
